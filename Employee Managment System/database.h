@@ -69,5 +69,10 @@ public:
         }
         return -1; // return -1 if no employee with salary higher than 20,000 found
     }
+
+    Employee retrive_data(int index) {
+
+        return Employees_data[index];
+    }
 };
 #endif

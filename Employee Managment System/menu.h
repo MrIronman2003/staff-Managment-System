@@ -15,7 +15,9 @@ class Menu {
     Database employee_database;
     string input;
     Employee New_employee;
-    int validate_state = 0;  // Initialize validate_state to a default value
+    address new_employee_addresss;
+
+    int validate_state = 0;
 
 public:
     void display_menu() {
@@ -80,8 +82,9 @@ public:
         case 1: {
             system("cls");
             cout << "Add new Employee Data selected";
+
             //Handle ID
-            cout << el << "Enter ID or exit to return to the main menu!" << el;
+            cout << el << "Enter ID or type \"exit\" to return to the main menu!" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
                 input = user_input.get_input();
@@ -103,7 +106,7 @@ public:
             New_employee.set_id(ID); //save validated ID
 
             //Handle Name
-            cout << "Enter Employee Name or type exit to return to the main menu!" << el;
+            cout << "Enter Employee Name or type \"exit\" to return to the main menu!" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
                 input = user_input.get_input();
@@ -124,7 +127,7 @@ public:
             New_employee.set_name(input); //save validated Name
 
             //Handle Age
-            cout << "Enter Employee Age or type exit to return to the main menu!" << el;
+            cout << "Enter Employee Age or type \"exit\" to return to the main menu!" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
                 input = user_input.get_input();
@@ -142,6 +145,29 @@ public:
                     cout << "Age already exist, please enter a new Name!" << el;
                 }
             }
+
+            //Handle Addresss
+            cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
+            while (1) {
+                validate_state = 0; //reset validate_state
+
+            }
+
+            //Handle Employee Role
+            cout << "Enter Employee Role or type \"exit\" to return to the main menu!" << el;
+            while (1) {
+                validate_state = 0; //reset validate_state
+
+            }
+
+            //Handle Employee Salary
+            cout << "Enter Employee Salary or type \"exit\" to return to the main menu!" << el;
+            while (1) {
+                validate_state = 0; //reset validate_state
+
+            }
+
+            //Confirmation to return to the main menu by pressing enter
             cout << "Employee data saved successfully!\n"
                 "press enter to return to the menu.\n";
             string status;
@@ -173,6 +199,8 @@ public:
             display_menu();
         }
         }
+
+        //return to the main menu after option have been executed
         display_menu();
     }
     void exit_system() {

@@ -13,11 +13,33 @@ using namespace std;
 #define el "\n"
 
 class Out_Put_Handler {
-	Employee 
+	Database data;
+	Employee display_employee_data;
+	address address_data;
 public:
-	void Display_Menu();
-	void display_employee_details() {
+	void Display_Menu(){
 
+	}
+	void display_employee_details(int index) {
+		display_employee_data = data.retrive_data(index);
+		//display ID
+		cout << "ID: " << display_employee_data.get_id() << el;
+		//Display Name
+		cout << "Name: " << display_employee_data.get_name() << el;
+		//Display Age
+		cout << "Age: " << display_employee_data.get_age() << el;
+		//Identefying address data
+		address_data = display_employee_data.get_home_address();
+		//display address data
+		cout << "Address: " << el << "Street: " << address_data.street_name << el;
+		cout << "Building Number: " << address_data.building_number << el;
+		cout << "Floor Number: " << address_data.floor_number << el;
+		cout << "Apartment Number: " << address_data.apartment_number << el;
+		cout << "Nearby landmarks: " << address_data.near_by_landmarks << el;
+		//Display role
+		cout << "Role: " << display_employee_data.get_id() << el;
+		//Display Salary
+		cout << "Salary: " << display_employee_data.get_id() << el;
 	}
 	
 };
