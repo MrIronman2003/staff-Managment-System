@@ -149,7 +149,32 @@ public:
             //Handle Addresss
             cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
             while (1) {
+                address input_address;
                 validate_state = 0; //reset validate_state
+
+                cout << "Enter street name: " << el;
+                input = user_input.get_input();
+                input_address.street_name = input;
+
+                cout << "Enter near by land mark: " << el;
+                input = user_input.get_input();
+                input_address.near_by_landmarks = input;
+
+                cout << "Enter Building Number: " << el;
+                input = user_input.get_input();
+                input_address.building_number = stoll(input);
+
+                cout << "Enter Floor Number: " << el;
+                input = user_input.get_input();
+                input_address.floor_number = stoll(input);
+
+                cout << "Enter Apartment Number: " << el;
+                input = user_input.get_input();
+                input_address.apartment_number = stoll(input);
+
+
+                validate_state = validate_input.validate_home_address(input_address);
+
 
             }
 

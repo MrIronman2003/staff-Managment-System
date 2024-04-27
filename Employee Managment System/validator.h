@@ -79,7 +79,7 @@ public:
 
     }
 
-    int validate_home_address(string address_check) {
+    int validate_home_address(address address_check) {
 
     }
 
