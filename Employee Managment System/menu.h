@@ -87,6 +87,7 @@ public:
             cout << el << "Enter ID or type \"exit\" to return to the main menu!" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
+                cin.ignore(); //clear buffer
                 input = user_input.get_input();
                 validate_state = validate_input.validate_id(input);
                 if (validate_state == 0) {
@@ -149,33 +150,55 @@ public:
             //Handle Addresss
             cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
             while (1) {
-                address input_address;
+                string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num;
                 validate_state = 0; //reset validate_state
 
                 cout << "Enter street name: " << el;
                 input = user_input.get_input();
-                input_address.street_name = input;
+                if (validate_input.validate_exit(input) == -1) {
+                    display_menu();
+                }
+                temp_street_name = input;
 
                 cout << "Enter near by land mark: " << el;
                 input = user_input.get_input();
-                input_address.near_by_landmarks = input;
+                temp_near_by_landmarks = input;
 
                 cout << "Enter Building Number: " << el;
                 input = user_input.get_input();
-                input_address.building_number = stoll(input);
+                if (validate_input.validate_exit(input) == -1) {
+                    display_menu();
+                }
+                temp_building_num = input;
 
                 cout << "Enter Floor Number: " << el;
                 input = user_input.get_input();
-                input_address.floor_number = stoll(input);
+                if (validate_input.validate_exit(input) == -1) {
+                    display_menu();
+                }
+                temp_floor_num = input;
 
                 cout << "Enter Apartment Number: " << el;
                 input = user_input.get_input();
-                input_address.apartment_number = stoll(input);
+                if (validate_input.validate_exit(input) == -1) {
+                    display_menu();
+                }
+                temp_apart_num = input;
 
 
-                validate_state = validate_input.validate_home_address(input_address);
-
-
+                validate_state = validate_input.validate_home_address(temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num);
+                if (validate_state == 0) {
+                    break;
+                }
+                else if (validate_state == -1) {
+                    display_menu();
+                }
+                else if (validate_state == 1) {
+                    cout << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << el;
+                }
+                else if (validate_state == 0) {
+                    break;
+                }
             }
 
             //Handle Employee Role

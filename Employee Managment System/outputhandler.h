@@ -17,9 +17,6 @@ class Out_Put_Handler {
 	Employee display_employee_data;
 	address address_data;
 public:
-	void Display_Menu(){
-
-	}
 	void display_employee_details(int index) {
 		display_employee_data = data.retrive_data(index);
 		//display ID

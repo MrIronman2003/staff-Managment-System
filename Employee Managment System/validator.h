@@ -46,6 +46,7 @@ public:
     }
 
     int validate_name(string name_check) {
+
         if (name_check == "exit") {
             return -1;
         }
@@ -57,11 +58,11 @@ public:
         }
     }
 
-    int validate_age(string age_check) {
+    int validate_age(const string& age_check) {
         try {
-            int age = stoll(age_check);  // Convert input to long long
-            if (age > 1000) {
-                return 1;  // Invalid input (large number)
+            int age = stoi(age_check);  // Convert input to integer
+            if (age < 16 || age > 120) {
+                return 1;  // Invalid input (outside valid range)
             }
             else {
                 return 0;  // No error
@@ -76,11 +77,39 @@ public:
         catch (const out_of_range&) {
             return 1;  // Invalid input (out of range)
         }
-
     }
 
-    int validate_home_address(address address_check) {
 
+    int validate_home_address(const string& check_street, const string& check_nearby_landmark,
+        const string& check_building_number, const string& check_floor_num,
+        const string& check_appart_num) {
+        try {
+            // Convert building number to an integer
+            int building_number = stoi(check_building_number);
+
+            // Convert floor number to an integer
+            int floor_number = stoi(check_floor_num);
+
+            // Convert apartment number to an integer
+            int apartment_number = stoi(check_appart_num);
+
+            // Check if the conversion was successful
+            // (You can add additional validation logic here if needed)
+
+            // Assuming other address validation checks (e.g., street, landmark) are performed elsewhere
+
+            return 0;  // No error
+        }
+        catch (const invalid_argument&) {
+            if (check_street == "exit" || check_nearby_landmark == "exit" ||
+                check_building_number == "exit" || check_floor_num == "exit" || check_appart_num == "exit") {
+                return -1;  // User entered "exit"
+            }
+            return 1;  // Invalid input
+        }
+        catch (const out_of_range&) {
+            return 1;  // Invalid input (out of range)
+        }
     }
 
     int validate_role(string role_check) {
@@ -89,6 +118,15 @@ public:
 
     int validate_salary(string salary_check) {
 
+    }
+
+    int validate_exit(string check_exit_state) {
+        if (check_exit_state == "exit") {
+            return -1;
+        }
+        else {
+            return 0;
+        }
     }
 };
 #endif

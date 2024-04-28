@@ -17,7 +17,6 @@ private:
 public:
 	string get_input() {
 		input = "0"; //reset input value
-		cin.ignore(); //clear buffer
 		getline(cin, input);
 		return input;
 	}
