@@ -185,12 +185,10 @@ public:
 
         return 1; // Return error
     }
-
     int validate_salary(string salary_check) {
-
         try {
-            long long ID = stoll(salary_check);  // Convert input to long long
-            if (ID > 10000000000) {
+            long long salary = stoll(salary_check);  // Convert input to long long
+            if (salary > 10000000000) {
                 return 1;  // Invalid input (large number)
             }
             // Assuming `find_employee_by_id` exists in the `Database` class

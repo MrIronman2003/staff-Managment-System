@@ -26,41 +26,43 @@ private:
 
 public:
     // Define public getter methods
-    int get_id() { 
-        return ID; 
+    long long get_id() {
+        return ID;
     }
-    string get_name() { 
-        return name; 
+    string get_name() {
+        return name;
     }
-    int get_age() { 
-        return age; 
+    int get_age() {
+        return age;
     }
-    address get_home_address() { 
-        return home_address; 
+    address get_home_address() {
+        return home_address;
     }
-    string get_role() { 
-        return role; 
+    string get_role() {
+        return role;
     }
-    float get_salary() { 
-        return salary; 
+    float get_salary() {
+        return salary;
     }
 
     // Define public setter methods
-    void set_id(int id) { 
-        ID = id; 
+    void set_id(long long id) {
+        ID = id;
     }
-    void set_name(string n) { 
-        name = n; 
+    void set_name(string n) {
+        name = n;
     }
-    void set_age(int a) { 
-        age = a; 
+    void set_age(int a) {
+        age = a;
     }
-    void set_home_Address(address home) { 
-        home_address = home; }
-    void set_role(string r) { role = r; 
+    void set_home_address(address home) {
+        home_address = home;
     }
-    void set_salary(float s) { 
-        salary = s; 
+    void set_role(string r) {
+        role = r;
+    }
+    void set_salary(float s) {
+        salary = s;
     }
 };
 #endif

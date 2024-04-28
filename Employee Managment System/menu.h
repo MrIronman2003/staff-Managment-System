@@ -147,7 +147,7 @@ public:
                     cout << "Age already exist, please enter a new Name!" << el;
                 }
             }
-            int age = stoll(input);
+            long long age = stoi(input);
 
             //Handle Addresss
             cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
@@ -264,7 +264,7 @@ public:
             new_employee_addresss.building_number = stoi(temp_building_num);
             new_employee_addresss.floor_number = stoi(temp_floor_num);
             new_employee_addresss.apartment_number = stoi(temp_apart_num);
-            New_employee.set_home_Address(new_employee_addresss);
+            New_employee.set_home_address(new_employee_addresss);
             New_employee.set_role(input);
             New_employee.set_salary(stof(input));
             //Save data of employee in Database

@@ -49,7 +49,7 @@ public:
         if (index != -1) {
             Employees_data[index].set_name(name);
             Employees_data[index].set_age(age);
-            Employees_data[index].set_home_Address(home_address);
+            Employees_data[index].set_home_address(home_address);
             Employees_data[index].set_role(role);
             Employees_data[index].set_salary(salary);
         }
