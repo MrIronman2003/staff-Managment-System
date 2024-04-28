@@ -120,7 +120,6 @@ public:
         }
     }
 
-
     int validate_home_address(const string& check_street, const string& check_nearby_landmark,
         const string& check_building_number, const string& check_floor_num,
         const string& check_appart_num) {
@@ -162,19 +161,21 @@ public:
         string lowercase_input = role_check;
         transform(lowercase_input.begin(), lowercase_input.end(), lowercase_input.begin(), ::tolower);
 
-        for (const auto& position : Executive_Positions) {
-            // Convert position name to lowercase for comparison
-            string lowercase_position = position.name;
-            transform(lowercase_position.begin(), lowercase_position.end(), lowercase_position.begin(), ::tolower);
+        for (const auto& position : positions) {
+            // Convert both position name and abbreviation to lowercase for comparison
+            string lowercase_position_name = position.name;
+            string lowercase_position_abbreviation = position.abbreviation;
+            transform(lowercase_position_name.begin(), lowercase_position_name.end(), lowercase_position_name.begin(), ::tolower);
+            transform(lowercase_position_abbreviation.begin(), lowercase_position_abbreviation.end(), lowercase_position_abbreviation.begin(), ::tolower);
 
-            if (lowercase_position == lowercase_input) {
+            if (lowercase_position_name == lowercase_input || lowercase_position_abbreviation == lowercase_input) {
                 return 0; // Validation passed successfully
             }
         }
 
         // Check if the role is an executive position
-        for (const auto& position : Executive_Positions) {
-            if (position.name == role_check) {
+        for (const auto& position : positions) {
+            if (position.name == role_check || position.abbreviation == role_check) {
                 // Call find_employee_by_role and check if an employee exists
                 if (search.find_employee_by_role(role_check) != -1) {
                     return 2; // ID found
@@ -184,7 +185,6 @@ public:
 
         return 1; // Return error
     }
-
 
     int validate_salary(string salary_check) {
 
@@ -215,5 +215,10 @@ public:
             return 0;
         }
     }
+
+    vector<CompanyPosition> return_positions() {
+        return positions;
+    }
+
 };
 #endif

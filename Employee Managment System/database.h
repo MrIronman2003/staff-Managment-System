@@ -21,6 +21,7 @@ public:
     void add_employee(Employee new_Employee) {
         Employees_data.push_back(new_Employee);
     }
+
     int find_employee_by_id(int search_id) {
         for (int i = 0; i < Employees_data.size(); i++) {
             if (Employees_data[i].get_id() == search_id) {

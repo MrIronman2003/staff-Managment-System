@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <vector>
+#include <iomanip>
 #include "database.h"
 #include "employee.h"
 #include "validator.h"
@@ -16,6 +18,8 @@ class Menu {
     string input;
     Employee New_employee;
     address new_employee_addresss;
+    vector<CompanyPosition> display_positions = validate_input.return_positions();
+    string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num;
 
     int validate_state = 0;
 
@@ -102,8 +106,7 @@ public:
                     cout << "ID is already taken, please enter a new ID!" << el;
                 }
             }
-            int ID = stoll(input);
-            New_employee.set_id(ID); //save validated ID
+            long long ID = stoll(input);
 
             //Handle Name
             cout << "Enter Employee Name or type \"exit\" to return to the main menu!" << el;
@@ -124,7 +127,6 @@ public:
                     cout << "Name already exist, please enter a new Name!" << el;
                 }
             }
-            New_employee.set_name(input); //save validated Name
 
             //Handle Age
             cout << "Enter Employee Age or type \"exit\" to return to the main menu!" << el;
@@ -145,11 +147,11 @@ public:
                     cout << "Age already exist, please enter a new Name!" << el;
                 }
             }
+            int age = stoll(input);
 
             //Handle Addresss
             cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
             while (1) {
-                string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num;
                 validate_state = 0; //reset validate_state
 
                 cout << "Enter street name: " << el;
@@ -200,11 +202,18 @@ public:
                 }
             }
 
-            //Handle Employee Role
+            // Handle Employee Role and display the positions in a table
             cout << "Enter Employee Role or type \"exit\" to return to the main menu!" << el;
+            cout << "-----------------------------------------" << el;
+            cout << "| Title                        | Abbreviation |" << el;
+            cout << "-----------------------------------------" << el;
+            for (const auto& pos : display_positions) {
+                cout << "| " << left << setw(30) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
+            }
+            cout << "-----------------------------------------" << el;
+            //Role Validation proccess
             while (1) {
                 validate_state = 0; //reset validate_state
-                input = user_input.get_input();
                 input = user_input.get_input();
                 validate_state = validate_input.validate_role(input);
                 if (validate_state == 0) {
@@ -220,6 +229,7 @@ public:
                     cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to return to the main menu!" << el;
                 }
             }
+            //save validated role
 
             //Handle Employee Salary
             cout << "Enter Employee Salary or type \"exit\" to return to the main menu!" << el;
@@ -240,6 +250,25 @@ public:
                     cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
                 }
             }
+
+            //saving Data to database class
+            //save validated ID
+            New_employee.set_id(ID); 
+            //save validated Name
+            New_employee.set_name(input); 
+            //save validated age
+            New_employee.set_age(age);
+            //save validated Employee address
+            new_employee_addresss.street_name = temp_street_name;
+            new_employee_addresss.near_by_landmarks = temp_near_by_landmarks;
+            new_employee_addresss.building_number = stoi(temp_building_num);
+            new_employee_addresss.floor_number = stoi(temp_floor_num);
+            new_employee_addresss.apartment_number = stoi(temp_apart_num);
+            New_employee.set_home_Address(new_employee_addresss);
+            New_employee.set_role(input);
+            New_employee.set_salary(stof(input));
+            //Save data of employee in Database
+            employee_database.add_employee(New_employee);
 
             //Confirmation to return to the main menu by pressing enter
             cout << "Employee data saved successfully!\n"
@@ -303,7 +332,7 @@ public:
         case 2: {
             // If the user chooses to exit, display the credits and exit the program
             cout << "Program made by:\n"
-                "Mahmoud Ahmed\tID: 235051\n"
+                "Mahmoud Ahmed\tID: 234051\n"
                 "Ahmed Hussein\tID: 225381\n"
                 "Exiting Program...\n";
             exit(1);

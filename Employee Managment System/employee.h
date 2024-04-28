@@ -18,7 +18,8 @@ class Employee
 {
 private:
     // Declare private member variables
-    int ID, age;
+    long long ID;
+    int age;
     float salary;
     string name, role;
     address home_address;
@@ -62,6 +63,4 @@ public:
         salary = s; 
     }
 };
-
-
 #endif
