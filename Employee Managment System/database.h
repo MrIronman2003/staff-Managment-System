@@ -70,6 +70,16 @@ public:
         return -1; // return -1 if no employee with salary higher than 20,000 found
     }
 
+    int find_employee_by_role(string search_role) {
+        for (int i = 0; i < Employees_data.size(); i++) {
+            if (Employees_data[i].get_role() == search_role) {
+                return i; // return the index of the Employee object
+            }
+        }
+        return -1; // return -1 if no employee with executive position where found
+
+    }
+
     Employee retrive_data(int index) {
 
         return Employees_data[index];

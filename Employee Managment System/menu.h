@@ -34,7 +34,6 @@ public:
             << "6. Exit Program.\n";
         select_option();
     }
-
     void select_option() {
         int option;
 
@@ -205,14 +204,41 @@ public:
             cout << "Enter Employee Role or type \"exit\" to return to the main menu!" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
-
+                input = user_input.get_input();
+                input = user_input.get_input();
+                validate_state = validate_input.validate_role(input);
+                if (validate_state == 0) {
+                    break;
+                }
+                else if (validate_state == -1) {
+                    display_menu();
+                }
+                else if (validate_state == 1) {
+                    cout << "Invalid input, please enter a valid Role or type \"exit\" to return to the main menu!" << el;
+                }
+                else if (validate_state == 2) {
+                    cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to return to the main menu!" << el;
+                }
             }
 
             //Handle Employee Salary
             cout << "Enter Employee Salary or type \"exit\" to return to the main menu!" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
-
+                input = user_input.get_input();
+                validate_state = validate_input.validate_salary(input);
+                if (validate_state == 0) {
+                    break;
+                }
+                else if (validate_state == -1) {
+                    display_menu();
+                }
+                else if (validate_state == 1) {
+                    cout << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << el;
+                }
+                else if (validate_state == 2) {
+                    cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
+                }
             }
 
             //Confirmation to return to the main menu by pressing enter

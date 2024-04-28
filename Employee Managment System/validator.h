@@ -19,8 +19,49 @@
 using namespace std;
 constexpr auto el = "\n";
 
+struct CompanyPosition {
+    string name;
+    string abbreviation;
+};
+
 class Employee_Validator {
     Database search;
+    vector<CompanyPosition> Executive_Positions = {
+        //Executive positions
+        {"Chief Executive Officer", "CEO"},
+        {"Chief Operating Officer", "COO"},
+        {"Chief Financial Officer", "CFO"},
+        {"Chief Marketing Officer", "CMO"},
+        {"Chief Technology Officer", "CTO"},
+        {"President", "President"},
+        {"Vice President", "VP"}
+    };
+    vector<CompanyPosition> positions = {
+        //Executive positions
+        {"Chief Executive Officer", "CEO"},
+        {"Chief Operating Officer", "COO"},
+        {"Chief Financial Officer", "CFO"},
+        {"Chief Marketing Officer", "CMO"},
+        {"Chief Technology Officer", "CTO"},
+        {"President", "President"},
+        {"Vice President", "VP"},
+        //Managment positions
+        {"General Manager", "GM"},
+        {"Operaation Manager", "OM"},
+        {"Human Resource Manger", "HR"},
+        {"Marketing Manager", "MM"},
+        {"Finance Manager", "FM"},
+        {"Information Technology Manager", "IT"},
+        {"Project Manager", "PM"},
+        //Operational positions
+        {"Sales Representative", "SR"},
+        {"Customer Service Representative", "CSR"},
+        {"Administrative Assistant", "AA"},
+        {"Data Analyst", "DA"},
+        {"Quality Control Inspector", "QCI"},
+        {"Production Worker", "PW"}
+    };
+
 public:
     int validate_id(const string& ID_check) {
         try {
@@ -112,12 +153,58 @@ public:
         }
     }
 
-    int validate_role(string role_check) {
+    int validate_role(const string& role_check) {
+        if (role_check == "exit") {
+            return -1; // Return to main menu
+        }
 
+        // Convert user input to lowercase for case-insensitive comparison
+        string lowercase_input = role_check;
+        transform(lowercase_input.begin(), lowercase_input.end(), lowercase_input.begin(), ::tolower);
+
+        for (const auto& position : Executive_Positions) {
+            // Convert position name to lowercase for comparison
+            string lowercase_position = position.name;
+            transform(lowercase_position.begin(), lowercase_position.end(), lowercase_position.begin(), ::tolower);
+
+            if (lowercase_position == lowercase_input) {
+                return 0; // Validation passed successfully
+            }
+        }
+
+        // Check if the role is an executive position
+        for (const auto& position : Executive_Positions) {
+            if (position.name == role_check) {
+                // Call find_employee_by_role and check if an employee exists
+                if (search.find_employee_by_role(role_check) != -1) {
+                    return 2; // ID found
+                }
+            }
+        }
+
+        return 1; // Return error
     }
+
 
     int validate_salary(string salary_check) {
 
+        try {
+            long long ID = stoll(salary_check);  // Convert input to long long
+            if (ID > 10000000000) {
+                return 1;  // Invalid input (large number)
+            }
+            // Assuming `find_employee_by_id` exists in the `Database` class
+            return 0;  // No error
+        }
+        catch (const invalid_argument&) {
+            if (salary_check == "exit") {
+                return -1;  // User entered "exit"
+            }
+            return 1;  // Invalid input
+        }
+        catch (const out_of_range&) {
+            return 1;  // Invalid input (out of range)
+        }
     }
 
     int validate_exit(string check_exit_state) {

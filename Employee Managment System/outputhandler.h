@@ -10,13 +10,16 @@
 #include "inputhandler.h"
 
 using namespace std;
-#define el "\n"
+#define el '\n'
 
 class Out_Put_Handler {
 	Database data;
 	Employee display_employee_data;
 	address address_data;
 public:
+	void display_menu() {
+
+	}
 	void display_employee_details(int index) {
 		display_employee_data = data.retrive_data(index);
 		//display ID
