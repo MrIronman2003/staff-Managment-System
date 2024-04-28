@@ -43,8 +43,8 @@ public:
     void edit_employee_details(int id) {
         string new_name; // Initialize with the updated name
         string new_role; // Initialize with the updated role
-        int new_age; // Initialize with the updated age
-        float new_salary; // Initialize with the updated salary
+        int new_age = 0; // Initialize with the updated age
+        float new_salary = 0.0f; // Initialize with the updated salary
         address new_home_address; // Initialize with the updated home address
 
         int index = find_employee_by_id(id);
