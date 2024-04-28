@@ -147,7 +147,7 @@ public:
                     cout << "Age already exist, please enter a new Name!" << el;
                 }
             }
-            long long age = stoi(input);
+            int age = stoi(input);
 
             //Handle Addresss
             cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
@@ -230,6 +230,7 @@ public:
                 }
             }
             //save validated role
+            string role = input;
 
             //Handle Employee Salary
             cout << "Enter Employee Salary or type \"exit\" to return to the main menu!" << el;
@@ -250,6 +251,7 @@ public:
                     cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
                 }
             }
+            float salary = stof(input);
 
             //saving Data to database class
             //save validated ID
@@ -265,8 +267,8 @@ public:
             new_employee_addresss.floor_number = stoi(temp_floor_num);
             new_employee_addresss.apartment_number = stoi(temp_apart_num);
             New_employee.set_home_address(new_employee_addresss);
-            New_employee.set_role(input);
-            New_employee.set_salary(stof(input));
+            New_employee.set_role(role);
+            New_employee.set_salary(salary);
             //Save data of employee in Database
             employee_database.add_employee(New_employee);
 

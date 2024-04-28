@@ -11,16 +11,19 @@ using namespace std;
 
 struct address {
     string street_name, near_by_landmarks;
-    int building_number, floor_number, apartment_number;
+    int building_number = 0; // Initialize building_number
+    int floor_number = 0; // Initialize floor_number
+    int apartment_number = 0; // Initialize apartment_number
 };
+
 
 class Employee
 {
 private:
     // Declare private member variables
     long long ID;
-    int age;
-    float salary;
+    int age = 0; // Initialize age
+    float salary = 0.0f; // Initialize salary
     string name, role;
     address home_address;
 

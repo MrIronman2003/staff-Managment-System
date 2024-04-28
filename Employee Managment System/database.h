@@ -41,19 +41,23 @@ public:
     }
 
     void edit_employee_details(int id) {
-        string name, role;
-        int age;
-        float salary;
+        string new_name; // Initialize with the updated name
+        string new_role; // Initialize with the updated role
+        int new_age; // Initialize with the updated age
+        float new_salary; // Initialize with the updated salary
+        address new_home_address; // Initialize with the updated home address
+
         int index = find_employee_by_id(id);
-        address home_address;
         if (index != -1) {
-            Employees_data[index].set_name(name);
-            Employees_data[index].set_age(age);
-            Employees_data[index].set_home_address(home_address);
-            Employees_data[index].set_role(role);
-            Employees_data[index].set_salary(salary);
+            // Update employee data
+            Employees_data[index].set_name(new_name);
+            Employees_data[index].set_age(new_age);
+            Employees_data[index].set_home_address(new_home_address);
+            Employees_data[index].set_role(new_role);
+            Employees_data[index].set_salary(new_salary);
         }
     }
+
 
     void delete_employee(int id) {
         int index = find_employee_by_id(id);
