@@ -118,7 +118,6 @@ public:
                 input = user_input.get_input();
                 validate_state = validate_input.validate_name(input);
                 if (validate_state == 0) {
-                    cout << el << validate_state << el;
                     break;
                 }
                 else if (validate_state == -1) {
@@ -130,7 +129,6 @@ public:
                 else if (validate_state == 2) {
                     cout << "Name already exist, please enter a new Name!" << el;
                 }
-                cout << el << validate_state << el;
             }
             string name = input;
 
@@ -233,11 +231,11 @@ public:
             }
 
             // Handle Employee Role and display the positions in a table
-            cout << "Enter Employee Role or type \"exit\" to return to the main menu!" << el;
+            cout << "Enter Employee Role Abbreviation or type \"exit\" to return to the main menu!" << el;
             cout << "-----------------------------------------" << el;
             cout << "| Title                        | Abbreviation |" << el;
             cout << "-----------------------------------------" << el;
-            for (const auto& pos : display_positions) {
+            for (const auto& pos : display_positions) { //Loop to print the data in the vector
                 cout << "| " << left << setw(30) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
             }
             cout << "-----------------------------------------" << el;
@@ -245,7 +243,6 @@ public:
             while (1) {
                 validate_state = 0; //reset validate_state
                 input = user_input.get_input();
-                validate_state = validate_input.validate_role(input);
                 if (validate_state == 0) {
                     break;
                 }

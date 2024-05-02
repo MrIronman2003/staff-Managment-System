@@ -168,16 +168,27 @@ public:
             transform(lowercase_position_abbreviation.begin(), lowercase_position_abbreviation.end(), lowercase_position_abbreviation.begin(), ::tolower);
 
             if (lowercase_position_name == lowercase_input || lowercase_position_abbreviation == lowercase_input) {
-                // Call find_employee_by_role and check if an employee exists
-                if (search.find_employee_by_role(role_check) != -1) {
-                    cout << el << "validation return: " << search.find_employee_by_role(role_check) << el;
-                    return 2; //Role found
+                // Check if the role is an executive role
+                for (const auto& executive_position : Executive_Positions) {
+                    string lowercase_executive_position_name = executive_position.name;
+                    string lowercase_executive_position_abbreviation = executive_position.abbreviation;
+                    transform(lowercase_executive_position_name.begin(), lowercase_executive_position_name.end(), lowercase_executive_position_name.begin(), ::tolower);
+                    transform(lowercase_executive_position_abbreviation.begin(), lowercase_executive_position_abbreviation.end(), lowercase_executive_position_abbreviation.begin(), ::tolower);
+
+                    if (lowercase_executive_position_name == lowercase_input || lowercase_executive_position_abbreviation == lowercase_input) {
+                        // Call find_employee_by_role and check if an employee exists
+                        if (search.find_employee_by_role(role_check) != -1) {
+                            cout << el << "validation return: " << search.find_employee_by_role(role_check) << el;
+                            return 2; //Role found
+                        }
+                    }
                 }
                 return 0; // Validation passed successfully
             }
         }
         return 1; // Return error
     }
+
 
     int validate_salary(string salary_check) {
         try {

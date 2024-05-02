@@ -25,7 +25,6 @@ public:
     //Setting 
     void add_employee(Employee new_Employee) {
         Employees_data.push_back(new_Employee);
-        cout << endl << "role got: " << new_Employee.get_role() << endl;
     }
 
     int find_employee_by_id(int search_id) {
