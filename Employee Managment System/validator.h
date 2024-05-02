@@ -17,7 +17,7 @@
 #include "employee.h"
 
 using namespace std;
-constexpr auto el = "\n";
+#define el "\n"
 
 struct CompanyPosition {
     string name;
@@ -70,7 +70,7 @@ public:
                 return 1;  // Invalid input (large number)
             }
             // Assuming `find_employee_by_id` exists in the `Database` class
-            if (search.find_employee_by_id(static_cast<int>(ID)) != -1) {
+            if (search.find_employee_by_id(ID) != -1) {
                 return 2;  // ID found
             }
             return 0;  // No error
@@ -185,6 +185,7 @@ public:
 
         return 1; // Return error
     }
+
     int validate_salary(string salary_check) {
         try {
             long long salary = stoll(salary_check);  // Convert input to long long
@@ -214,9 +215,27 @@ public:
         }
     }
 
+    int validate_int(string check_int) {
+        try {
+            int input_to_int = stoll(check_int);  // Convert input to long long
+            if (input_to_int > 1000000) {
+                return 1;  // Invalid input (large number)
+            }
+            return 0;  // No error
+        }
+        catch (const invalid_argument&) {
+            if (check_int == "exit") {
+                return -1;  // User entered "exit"
+            }
+            return 1;  // Invalid input
+        }
+        catch (const out_of_range&) {
+            return 1;  // Invalid input (out of range)
+        }
+    }
+
     vector<CompanyPosition> return_positions() {
         return positions;
     }
-
 };
 #endif

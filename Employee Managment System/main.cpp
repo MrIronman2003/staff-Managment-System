@@ -11,6 +11,7 @@ using namespace std;
 #define el "\n"
 
 int main() {
+	Database Employees_database;
 	Menu main_menu;
 	while (1) {
 		main_menu.display_menu();

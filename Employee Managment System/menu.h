@@ -11,6 +11,8 @@
 using namespace std;
 #define el "\n"
 
+vector<Employee> Database::Employees_data;
+
 class Menu {
     Input_Handler user_input;
     Employee_Validator validate_input;
@@ -22,7 +24,7 @@ class Menu {
     string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num;
 
     int validate_state = 0;
-
+    
 public:
     void display_menu() {
         system("cls");
@@ -82,15 +84,16 @@ public:
     }
     void execute_option(int choice) {
         switch (choice) {
+        //Add new employee
         case 1: {
             system("cls");
             cout << "Add new Employee Data selected";
 
             //Handle ID
             cout << el << "Enter ID or type \"exit\" to return to the main menu!" << el;
+            cin.ignore(); //clear buffer
             while (1) {
                 validate_state = 0; //reset validate_state
-                cin.ignore(); //clear buffer
                 input = user_input.get_input();
                 validate_state = validate_input.validate_id(input);
                 if (validate_state == 0) {
@@ -115,6 +118,7 @@ public:
                 input = user_input.get_input();
                 validate_state = validate_input.validate_name(input);
                 if (validate_state == 0) {
+                    cout << el << validate_state << el;
                     break;
                 }
                 else if (validate_state == -1) {
@@ -126,6 +130,7 @@ public:
                 else if (validate_state == 2) {
                     cout << "Name already exist, please enter a new Name!" << el;
                 }
+                cout << el << validate_state << el;
             }
 
             //Handle Age
@@ -153,7 +158,7 @@ public:
             cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
-
+                
                 cout << "Enter street name: " << el;
                 input = user_input.get_input();
                 if (validate_input.validate_exit(input) == -1) {
@@ -164,25 +169,49 @@ public:
                 cout << "Enter near by land mark: " << el;
                 input = user_input.get_input();
                 temp_near_by_landmarks = input;
-
+                
                 cout << "Enter Building Number: " << el;
-                input = user_input.get_input();
-                if (validate_input.validate_exit(input) == -1) {
-                    display_menu();
+                while (true) {
+                    input = user_input.get_input();
+                    if (validate_input.validate_exit(input) == -1) {
+                        display_menu();
+                    }
+                    else if (validate_input.validate_int(input) == 1) {
+                        cout << "invalid input, please enter a valid number!" << el;
+                    }
+                    else {
+                        break;
+                    }
                 }
                 temp_building_num = input;
 
                 cout << "Enter Floor Number: " << el;
-                input = user_input.get_input();
-                if (validate_input.validate_exit(input) == -1) {
-                    display_menu();
+                while (true) {
+                    input = user_input.get_input();
+                    if (validate_input.validate_exit(input) == -1) {
+                        display_menu();
+                    }
+                    else if (validate_input.validate_int(input) == 1) {
+                        cout << "invalid input, please enter a valid number!" << el;
+                    }
+                    else {
+                        break;
+                    }
                 }
                 temp_floor_num = input;
 
                 cout << "Enter Apartment Number: " << el;
-                input = user_input.get_input();
-                if (validate_input.validate_exit(input) == -1) {
-                    display_menu();
+                while (true) {
+                    input = user_input.get_input();
+                    if (validate_input.validate_exit(input) == -1) {
+                        display_menu();
+                    }
+                    else if (validate_input.validate_int(input) == 1) {
+                        cout << "invalid input, please enter a valid number!" << el;
+                    }
+                    else {
+                        break;
+                    }
                 }
                 temp_apart_num = input;
 
@@ -255,9 +284,9 @@ public:
 
             //saving Data to database class
             //save validated ID
-            New_employee.set_id(ID); 
+            New_employee.set_id(ID);
             //save validated Name
-            New_employee.set_name(input); 
+            New_employee.set_name(input);
             //save validated age
             New_employee.set_age(age);
             //save validated Employee address
@@ -279,6 +308,7 @@ public:
             getline(cin, status);
             break;
         }
+        //Edit 
         case 2: {
             cout << "Edit Employee Data selected";
             execute_option(2);

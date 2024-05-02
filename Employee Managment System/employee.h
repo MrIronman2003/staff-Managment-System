@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
+#include <cctype>
 
 using namespace std;
 
@@ -21,7 +23,7 @@ class Employee
 {
 private:
     // Declare private member variables
-    long long ID;
+    long long ID = 0;
     int age = 0; // Initialize age
     float salary = 0.0f; // Initialize salary
     string name, role;
@@ -67,5 +69,15 @@ public:
     void set_salary(float s) {
         salary = s;
     }
+
+    const address& get_home_address() const {
+        return home_address;
+    }
+
+    // Inside the Employee class definition
+    bool operator==(const Employee& other) const {
+        return ID == other.ID; // Compare IDs
+    }
+
 };
 #endif

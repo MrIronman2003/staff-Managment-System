@@ -12,6 +12,8 @@
 using namespace std;
 #define el '\n'
 
+vector<Employee> Database::Employees_data;
+
 class Out_Put_Handler {
 	Database data;
 	Employee display_employee_data;
@@ -21,7 +23,7 @@ public:
 
 	}
 	void display_employee_details(int index) {
-		display_employee_data = data.retrive_data(index);
+		system("cls");
 		//display ID
 		cout << "ID: " << display_employee_data.get_id() << el;
 		//Display Name
@@ -41,6 +43,5 @@ public:
 		//Display Salary
 		cout << "Salary: " << display_employee_data.get_id() << el;
 	}
-	
 };
 #endif
