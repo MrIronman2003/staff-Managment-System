@@ -132,6 +132,7 @@ public:
                 }
                 cout << el << validate_state << el;
             }
+            string name = input;
 
             //Handle Age
             cout << "Enter Employee Age or type \"exit\" to return to the main menu!" << el;
@@ -286,7 +287,7 @@ public:
             //save validated ID
             New_employee.set_id(ID);
             //save validated Name
-            New_employee.set_name(input);
+            New_employee.set_name(name);
             //save validated age
             New_employee.set_age(age);
             //save validated Employee address
@@ -308,27 +309,32 @@ public:
             getline(cin, status);
             break;
         }
-        //Edit 
+
+        //Edit Employee Data 
         case 2: {
             cout << "Edit Employee Data selected";
             execute_option(2);
             break;
         }
+
         case 3: {
             cout << "Search Employee selected";
             execute_option(3);
             break;
         }
+
         case 4: {
             cout << "Search Employee with High Wage selected";
             execute_option(4);
             break;
         }
+
         case 5: {
             cout << "Delete Employee Data selected";
             execute_option(5);
             break;
         }
+
         case 6: {
             exit_system();
             display_menu();

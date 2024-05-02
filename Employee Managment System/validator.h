@@ -87,7 +87,6 @@ public:
     }
 
     int validate_name(string name_check) {
-
         if (name_check == "exit") {
             return -1;
         }
@@ -169,20 +168,14 @@ public:
             transform(lowercase_position_abbreviation.begin(), lowercase_position_abbreviation.end(), lowercase_position_abbreviation.begin(), ::tolower);
 
             if (lowercase_position_name == lowercase_input || lowercase_position_abbreviation == lowercase_input) {
+                // Call find_employee_by_role and check if an employee exists
+                if (search.find_employee_by_role(role_check) != -1) {
+                    cout << el << "validation return: " << search.find_employee_by_role(role_check) << el;
+                    return 2; //Role found
+                }
                 return 0; // Validation passed successfully
             }
         }
-
-        // Check if the role is an executive position
-        for (const auto& position : positions) {
-            if (position.name == role_check || position.abbreviation == role_check) {
-                // Call find_employee_by_role and check if an employee exists
-                if (search.find_employee_by_role(role_check) != -1) {
-                    return 2; // ID found
-                }
-            }
-        }
-
         return 1; // Return error
     }
 

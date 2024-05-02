@@ -25,6 +25,7 @@ public:
     //Setting 
     void add_employee(Employee new_Employee) {
         Employees_data.push_back(new_Employee);
+        cout << endl << "role got: " << new_Employee.get_role() << endl;
     }
 
     int find_employee_by_id(int search_id) {
@@ -54,7 +55,6 @@ public:
         return -1; // return -1 if no employee found
     }
 
-
     void edit_employee_details(int id) {
         int index = find_employee_by_id(id);
         if (index != -1) {
@@ -83,7 +83,6 @@ public:
         }
     }
 
-
     void delete_employee(int id) {
         int index = find_employee_by_id(id);
         if (index != -1) {
@@ -101,14 +100,23 @@ public:
     }
 
     int find_employee_by_role(string search_role) {
+        // Convert search_role to lower case
+        transform(search_role.begin(), search_role.end(), search_role.begin(),
+            [](unsigned char c) { return tolower(c); });
+
         for (int i = 0; i < Employees_data.size(); i++) {
-            if (Employees_data[i].get_role() == search_role) {
-                return i; // return the index of the Employee object
+            string employee_role = Employees_data[i].get_role();
+            // Convert employee_role to lower case
+            transform(employee_role.begin(), employee_role.end(), employee_role.begin(),
+                [](unsigned char c) { return tolower(c); });
+
+            if (employee_role == search_role) {
+                return 2; // return the index of the Employee object
             }
         }
-        return -1; // return -1 if no employee with executive position where found
-
+        return -1; // return -1 if no employee with the specified role was found
     }
+
 
     Employee retrive_data(int index) {
 
