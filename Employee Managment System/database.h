@@ -116,10 +116,33 @@ public:
         return -1; // return -1 if no employee with the specified role was found
     }
 
-
     Employee retrive_data(int index) {
 
         return Employees_data[index];
     }
+
+	void set_new_ID(int id, int index) {
+		Employees_data[index].set_id(id);
+	}
+
+	void set_new_name(string name, int index) {
+		Employees_data[index].set_name(name);
+	}
+
+    void set_new_age(int age, int index) {
+        Employees_data[index].set_age(age);
+    }
+
+    void set_new_address(address home_address, int index) {
+        Employees_data[index].set_home_address(home_address);
+    }
+
+	void set_new_role(string role, int index) {
+		Employees_data[index].set_role(role);
+	}
+
+	void set_new_salary(float salary, int index) {
+		Employees_data[index].set_salary(salary);
+	}
 };
 #endif

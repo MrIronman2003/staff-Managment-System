@@ -13,4 +13,7 @@
 using namespace std;
 #define el "\n"
 
+class Staff_Managment_System {
+
+};
 #endif

@@ -25,6 +25,7 @@ struct CompanyPosition {
 };
 
 class Employee_Validator {
+	int search_result;
     Database search;
     vector<CompanyPosition> Executive_Positions = {
         //Executive positions
@@ -177,10 +178,11 @@ public:
 
                     if (lowercase_executive_position_name == lowercase_input || lowercase_executive_position_abbreviation == lowercase_input) {
                         // Call find_employee_by_role and check if an employee exists
-                        if (search.find_employee_by_role(role_check) != -1) {
-                            cout << el << "validation return: " << search.find_employee_by_role(role_check) << el;
+                        search_result = search.find_employee_by_role(role_check);
+                        if (search_result != -1) {
                             return 2; //Role found
                         }
+
                     }
                 }
                 return 0; // Validation passed successfully
@@ -188,7 +190,6 @@ public:
         }
         return 1; // Return error
     }
-
 
     int validate_salary(string salary_check) {
         try {
