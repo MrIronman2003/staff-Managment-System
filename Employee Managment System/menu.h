@@ -17,12 +17,16 @@ class Menu {
     Input_Handler user_input;
     Employee_Validator validate_input;
     Database employee_database;
-    string input;
-    Employee New_employee;
-    address new_employee_addresss;
-	address edit_employee_addresss;
+    Employee New_employee, collected_data, Edited_employee;
+
+	//Addresss
+    address new_employee_addresss, edit_employee_addresss, collected_data_address;
+
+	//temp variables
+    string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num, input;
+
+    //vectors
     vector<CompanyPosition> display_positions = validate_input.return_positions();
-    string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num;
     vector<CompanyPosition> Executive_Positions = {
         //Executive positions
         {"Chief Executive Officer", "CEO"},
@@ -113,231 +117,13 @@ public:
     }
     void execute_option(int choice) {
         switch (choice) {
-            //Add new employee
+        //Add new employee
         case 1: {
             system("cls");
-            cout << "Add new Employee Data selected";
+            cout << "Adding new Employee Data" << el;
+			New_employee = collect_data();
 
-            //Handle ID
-            cout << el << "Enter ID or type \"exit\" to return to the main menu!" << el;
-            cin.ignore(); //clear buffer
-            while (1) {
-                validate_state = 0; //reset validate_state
-                input = user_input.get_input();
-                validate_state = validate_input.validate_id(input);
-                if (validate_state == 0) {
-                    break;
-                }
-                else if (validate_state == -1) {
-                    display_menu();
-                }
-                else if (validate_state == 1) {
-                    cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
-                }
-                else if (validate_state == 2) {
-                    cout << "ID is already taken, please enter a new ID!" << el;
-                }
-            }
-            long long ID = stoll(input);
-
-            //Handle Name
-            cout << "Enter Employee Name or type \"exit\" to return to the main menu!" << el;
-            while (1) {
-                validate_state = 0; //reset validate_state
-                input = user_input.get_input();
-                validate_state = validate_input.validate_name(input);
-                if (validate_state == 0) {
-                    break;
-                }
-                else if (validate_state == -1) {
-                    display_menu();
-                }
-                else if (validate_state == 1) {
-                    cout << "Invalid input, please enter a valid Name or exit to return to the main menu!" << el;
-                }
-                else if (validate_state == 2) {
-                    cout << "Name already exist, please enter a new Name!" << el;
-                }
-            }
-            string name = input;
-
-            //Handle Age
-            cout << "Enter Employee Age or type \"exit\" to return to the main menu!" << el;
-            while (1) {
-                validate_state = 0; //reset validate_state
-                input = user_input.get_input();
-                validate_state = validate_input.validate_age(input);
-                if (validate_state == 0) {
-                    break;
-                }
-                else if (validate_state == -1) {
-                    display_menu();
-                }
-                else if (validate_state == 1) {
-                    cout << "Invalid input, please enter a valid Age or type exit to return to the main menu!" << el;
-                }
-                else if (validate_state == 2) {
-                    cout << "Age already exist, please enter a new Name!" << el;
-                }
-            }
-            int age = stoi(input);
-
-            //Handle Addresss
-            cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
-            while (1) {
-                validate_state = 0; //reset validate_state
-
-                cout << "Enter street name: " << el;
-                input = user_input.get_input();
-                if (validate_input.validate_exit(input) == -1) {
-                    display_menu();
-                }
-                temp_street_name = input;
-
-                cout << "Enter near by land mark: " << el;
-                input = user_input.get_input();
-                temp_near_by_landmarks = input;
-
-                cout << "Enter Building Number: " << el;
-                while (true) {
-                    input = user_input.get_input();
-                    if (validate_input.validate_exit(input) == -1) {
-                        display_menu();
-                    }
-                    else if (validate_input.validate_int(input) == 1) {
-                        cout << "invalid input, please enter a valid number!" << el;
-                    }
-                    else {
-                        break;
-                    }
-                }
-                temp_building_num = input;
-
-                cout << "Enter Floor Number: " << el;
-                while (true) {
-                    input = user_input.get_input();
-                    if (validate_input.validate_exit(input) == -1) {
-                        display_menu();
-                    }
-                    else if (validate_input.validate_int(input) == 1) {
-                        cout << "invalid input, please enter a valid number!" << el;
-                    }
-                    else {
-                        break;
-                    }
-                }
-                temp_floor_num = input;
-
-                cout << "Enter Apartment Number: " << el;
-                while (true) {
-                    input = user_input.get_input();
-                    if (validate_input.validate_exit(input) == -1) {
-                        display_menu();
-                    }
-                    else if (validate_input.validate_int(input) == 1) {
-                        cout << "invalid input, please enter a valid number!" << el;
-                    }
-                    else {
-                        break;
-                    }
-                }
-                temp_apart_num = input;
-
-
-                validate_state = validate_input.validate_home_address(temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num);
-                if (validate_state == 0) {
-                    break;
-                }
-                else if (validate_state == -1) {
-                    display_menu();
-                }
-                else if (validate_state == 1) {
-                    cout << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << el;
-                }
-                else if (validate_state == 0) {
-                    break;
-                }
-            }
-
-            // Handle Employee Role and display the positions in a table
-            cout << "---------------------------------------------------" << el;
-            cout << "| Title                            | Abbreviation |" << el;
-            cout << "---------------------------------------------------" << el;
-
-            // Display Executive Positions
-            cout << "Executive Roles:" << el;
-            for (const auto& pos : Executive_Positions) {
-                cout << "| " << left << setw(32) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
-            }
-            cout << "---------------------------------------------------" << el;
-
-            // Display Management and Operational Positions
-            cout << "Management and Operational Roles:" << el;
-            for (const auto& pos : positions_managment_operational) {
-                cout << "| " << left << setw(32) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
-            }
-            cout << "---------------------------------------------------" << el;
-            cout << "Enter Employee Role Abbreviation or type \"exit\" to return to the main menu!" << el;
-
-            //Role Validation proccess
-            while (1) {
-                validate_state = 0; //reset validate_state
-                input = user_input.get_input();
-                validate_state = validate_input.validate_role(input);
-                if (validate_state == 0) {
-                    break;
-                }
-                else if (validate_state == -1) {
-                    display_menu();
-                }
-                else if (validate_state == 1) {
-                    cout << "Invalid input, please enter a valid Role or type \"exit\" to return to the main menu!" << el;
-                }
-                else if (validate_state == 2) {
-                    cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to return to the main menu!" << el;
-                }
-            }
-            //save validated role
-            string role = input;
-
-            //Handle Employee Salary
-            cout << "Enter Employee Salary or type \"exit\" to return to the main menu!" << el;
-            while (1) {
-                validate_state = 0; //reset validate_state
-                input = user_input.get_input();
-                validate_state = validate_input.validate_salary(input);
-                if (validate_state == 0) {
-                    break;
-                }
-                else if (validate_state == -1) {
-                    display_menu();
-                }
-                else if (validate_state == 1) {
-                    cout << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << el;
-                }
-                else if (validate_state == 2) {
-                    cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
-                }
-            }
-            float salary = stof(input);
-
-            //saving Data to database class
-            //save validated ID
-            New_employee.set_id(ID);
-            //save validated Name
-            New_employee.set_name(name);
-            //save validated age
-            New_employee.set_age(age);
-            //save validated Employee address
-            new_employee_addresss.street_name = temp_street_name;
-            new_employee_addresss.near_by_landmarks = temp_near_by_landmarks;
-            new_employee_addresss.building_number = stoi(temp_building_num);
-            new_employee_addresss.floor_number = stoi(temp_floor_num);
-            new_employee_addresss.apartment_number = stoi(temp_apart_num);
-            New_employee.set_home_address(new_employee_addresss);
-            New_employee.set_role(role);
-            New_employee.set_salary(salary);
-            //Save data of employee in Database
+			//saving new employee data in database
             employee_database.add_employee(New_employee);
 
             //Confirmation to return to the main menu by pressing enter
@@ -348,7 +134,7 @@ public:
             break;
         }
 
-              //Edit Employee Data 
+        //Edit Employee Data 
         case 2: {
             system("cls");
             cout << "Editing Employee Data: " << el;
@@ -625,7 +411,17 @@ public:
 
 			//Edit All Employee Info
             case 7: {
-                execute_option(6);
+				system("cls");
+				cout << "Editing All Employee Info" << el;
+                //getting edited employee data
+                Edited_employee = collect_data();
+				//sending edited data to database to be saved
+                employee_database.set_new_ID(Edited_employee.get_id(), index);
+				employee_database.set_new_name(Edited_employee.get_name(), index);
+				employee_database.set_new_age(Edited_employee.get_age(), index);
+				employee_database.set_new_address(Edited_employee.get_home_address(), index);
+				employee_database.set_new_role(Edited_employee.get_role(), index);
+				employee_database.set_new_salary(Edited_employee.get_salary(), index);
                 break;
             }
 
@@ -636,7 +432,6 @@ public:
             }
 			}
 		}
-
 
         case 3: {
             cout << "Search Employee selected";
@@ -696,4 +491,231 @@ public:
         }
         }
     }
+
+    Employee collect_data() {
+        //Handle ID
+        cout << "Enter ID or type \"exit\" to return to the main menu!" << el;
+        cin.ignore(); //clear buffer
+        while (1) {
+            validate_state = 0; //reset validate_state
+            input = user_input.get_input();
+            validate_state = validate_input.validate_id(input);
+            if (validate_state == 0) {
+                break;
+            }
+            else if (validate_state == -1) {
+                display_menu();
+            }
+            else if (validate_state == 1) {
+                cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
+            }
+            else if (validate_state == 2) {
+                cout << "ID is already taken, please enter a new ID!" << el;
+            }
+        }
+        long long ID = stoll(input);
+
+        //Handle Name
+        cout << "Enter Employee Name or type \"exit\" to return to the main menu!" << el;
+        while (1) {
+            validate_state = 0; //reset validate_state
+            input = user_input.get_input();
+            validate_state = validate_input.validate_name(input);
+            if (validate_state == 0) {
+                break;
+            }
+            else if (validate_state == -1) {
+                display_menu();
+            }
+            else if (validate_state == 1) {
+                cout << "Invalid input, please enter a valid Name or exit to return to the main menu!" << el;
+            }
+            else if (validate_state == 2) {
+                cout << "Name already exist, please enter a new Name!" << el;
+            }
+        }
+        string name = input;
+
+        //Handle Age
+        cout << "Enter Employee Age or type \"exit\" to return to the main menu!" << el;
+        while (1) {
+            validate_state = 0; //reset validate_state
+            input = user_input.get_input();
+            validate_state = validate_input.validate_age(input);
+            if (validate_state == 0) {
+                break;
+            }
+            else if (validate_state == -1) {
+                display_menu();
+            }
+            else if (validate_state == 1) {
+                cout << "Invalid input, please enter a valid Age or type exit to return to the main menu!" << el;
+            }
+            else if (validate_state == 2) {
+                cout << "Age already exist, please enter a new Name!" << el;
+            }
+        }
+        int age = stoi(input);
+
+        //Handle Addresss
+        cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
+        while (1) {
+            validate_state = 0; //reset validate_state
+
+            cout << "Enter street name: " << el;
+            input = user_input.get_input();
+            if (validate_input.validate_exit(input) == -1) {
+                display_menu();
+            }
+            temp_street_name = input;
+
+            cout << "Enter near by land mark: " << el;
+            input = user_input.get_input();
+            temp_near_by_landmarks = input;
+
+            cout << "Enter Building Number: " << el;
+            while (true) {
+                input = user_input.get_input();
+                if (validate_input.validate_exit(input) == -1) {
+                    display_menu();
+                }
+                else if (validate_input.validate_int(input) == 1) {
+                    cout << "invalid input, please enter a valid number!" << el;
+                }
+                else {
+                    break;
+                }
+            }
+            temp_building_num = input;
+
+            cout << "Enter Floor Number: " << el;
+            while (true) {
+                input = user_input.get_input();
+                if (validate_input.validate_exit(input) == -1) {
+                    display_menu();
+                }
+                else if (validate_input.validate_int(input) == 1) {
+                    cout << "invalid input, please enter a valid number!" << el;
+                }
+                else {
+                    break;
+                }
+            }
+            temp_floor_num = input;
+
+            cout << "Enter Apartment Number: " << el;
+            while (true) {
+                input = user_input.get_input();
+                if (validate_input.validate_exit(input) == -1) {
+                    display_menu();
+                }
+                else if (validate_input.validate_int(input) == 1) {
+                    cout << "invalid input, please enter a valid number!" << el;
+                }
+                else {
+                    break;
+                }
+            }
+            temp_apart_num = input;
+
+
+            validate_state = validate_input.validate_home_address(temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num);
+            if (validate_state == 0) {
+                break;
+            }
+            else if (validate_state == -1) {
+                display_menu();
+            }
+            else if (validate_state == 1) {
+                cout << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << el;
+            }
+            else if (validate_state == 0) {
+                break;
+            }
+        }
+
+        // Handle Employee Role and display the positions in a table
+        cout << "---------------------------------------------------" << el;
+        cout << "| Title                            | Abbreviation |" << el;
+        cout << "---------------------------------------------------" << el;
+
+        // Display Executive Positions
+        cout << "Executive Roles:" << el;
+        for (const auto& pos : Executive_Positions) {
+            cout << "| " << left << setw(32) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
+        }
+        cout << "---------------------------------------------------" << el;
+
+        // Display Management and Operational Positions
+        cout << "Management and Operational Roles:" << el;
+        for (const auto& pos : positions_managment_operational) {
+            cout << "| " << left << setw(32) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
+        }
+        cout << "---------------------------------------------------" << el;
+        cout << "Enter Employee Role Abbreviation or type \"exit\" to return to the main menu!" << el;
+
+        //Role Validation proccess
+        while (1) {
+            validate_state = 0; //reset validate_state
+            input = user_input.get_input();
+            validate_state = validate_input.validate_role(input);
+            if (validate_state == 0) {
+                break;
+            }
+            else if (validate_state == -1) {
+                display_menu();
+            }
+            else if (validate_state == 1) {
+                cout << "Invalid input, please enter a valid Role or type \"exit\" to return to the main menu!" << el;
+            }
+            else if (validate_state == 2) {
+                cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to return to the main menu!" << el;
+            }
+        }
+        //save validated role
+        string role = input;
+
+        //Handle Employee Salary
+        cout << "Enter Employee Salary or type \"exit\" to return to the main menu!" << el;
+        while (1) {
+            validate_state = 0; //reset validate_state
+            input = user_input.get_input();
+            validate_state = validate_input.validate_salary(input);
+            if (validate_state == 0) {
+                break;
+            }
+            else if (validate_state == -1) {
+                display_menu();
+            }
+            else if (validate_state == 1) {
+                cout << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << el;
+            }
+            else if (validate_state == 2) {
+                cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
+            }
+        }
+        float salary = stof(input);
+
+        //save validated ID
+        collected_data.set_id(ID);
+        //save validated Name
+        collected_data.set_name(name);
+        //save validated age
+        collected_data.set_age(age);
+        //save validated Employee address
+        collected_data_address.street_name = temp_street_name;
+        collected_data_address.near_by_landmarks = temp_near_by_landmarks;
+        collected_data_address.building_number = stoi(temp_building_num);
+        collected_data_address.floor_number = stoi(temp_floor_num);
+        collected_data_address.apartment_number = stoi(temp_apart_num);
+        collected_data.set_home_address(new_employee_addresss);
+		//saving validated role
+        collected_data.set_role(role);
+		//saving validated salary
+        collected_data.set_salary(salary);
+
+		return collected_data;
+    }
+
+
 };
