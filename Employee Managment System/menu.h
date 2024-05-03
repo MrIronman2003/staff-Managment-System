@@ -62,14 +62,14 @@ public:
         system("cls");
         cout << "Staff Management System" << el << el;
         cout << "====================================================" << el;
-        cout << "Main Menu\n"
-            << "====================================================\n";
-        cout << "1. Add New Employee.\n"
-            << "2. Edit Employee data.\n"
-            << "3. Search Employee.\n"
-            << "4. Search Employee with high wage.\n"
-            << "5. Delete Employee data.\n"
-            << "6. Exit Program.\n";
+        cout << "Main Menu" << el;
+        cout << "====================================================" << el;
+        cout << "1. Add New Employee." << el;
+        cout << "2. Edit Employee data." << el;
+        cout << "3. Search Employee. (not yet working)" << el;
+        cout << "4. Search Employee with high wage. (not yet working)" << el;
+        cout << "5. Delete Employee data." << el;
+        cout << "6. Exit Program." << el;
         select_option();
     }
     void select_option() {
@@ -433,18 +433,68 @@ public:
 			}
 		}
 
+		//search employee data
         case 3: {
-            cout << "Search Employee selected";
+			system("cls");
+            cout << "Searching Employee data" << el;
             break;
         }
 
+		//search employee with high wage
         case 4: {
             cout << "Search Employee with High Wage selected";
             break;
         }
 
+		//delete employee data
         case 5: {
-            cout << "Delete Employee Data selected";
+			system("cls");
+            cout << "Deleting Employee data" << el;
+			cout << "Enter employee ID you want to delete or tpye \"exit\" to return to the main menu" << el;
+			cin.ignore();
+			while (1) {
+				validate_state = 0; //reset validate_state
+				input = user_input.get_input();
+				validate_state = validate_input.validate_id(input);
+				if (validate_state == 0) {
+					cout << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << el;
+				}
+				else if (validate_state == -1) {
+					display_menu();
+				}
+				else if (validate_state == 1) {
+					cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
+				}
+				else if (validate_state == 2) {
+					break;
+				}
+			}
+
+			//confimation to delete employee data
+			system("cls");
+            cout << "Are you sure you want to delete employee with id: " << input << "?" << el;
+			cout << "Warning: This action cannot be undone!" << el << "1. YES." << el << "2. NO." << el;
+				int option;
+				while (!(cin >> option) || option < 1 || option > 2) {
+					cout << "Invalid choice. Please enter a valid input.\n";
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				}
+				switch (option) {
+				case 1: {
+                    employee_database.delete_employee(employee_database.find_employee_by_id(stoll(input)));
+					cout << "Employee data deleted successfully!" << el << "press enter to return to the menu." << el;
+                    string status;
+                    cin.ignore();
+                    getline(cin, status);
+					break;
+				}
+				case 2: {
+                    display_menu();
+                    break;
+                }
+				}
+			
             break;
         }
 

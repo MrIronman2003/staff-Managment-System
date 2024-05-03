@@ -82,11 +82,8 @@ public:
         }
     }
 
-    void delete_employee(int id) {
-        int index = find_employee_by_id(id);
-        if (index != -1) {
-            Employees_data.erase(Employees_data.begin() + index);
-        }
+    void delete_employee(int index) {
+        Employees_data.erase(Employees_data.begin() + index);
     }
 
     int find_employees_with_high_wage() {
