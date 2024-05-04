@@ -73,11 +73,5 @@ public:
     const address& get_home_address() const {
         return home_address;
     }
-
-    // Inside the Employee class definition
-    bool operator==(const Employee& other) const {
-        return ID == other.ID; // Compare IDs
-    }
-
 };
 #endif

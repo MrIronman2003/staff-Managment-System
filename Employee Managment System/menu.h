@@ -3,6 +3,8 @@
 #include <limits>
 #include <vector>
 #include <iomanip>
+#include <algorithm>
+#include "outputhandler.h"
 #include "database.h"
 #include "employee.h"
 #include "validator.h"
@@ -18,6 +20,7 @@ class Menu {
     Employee_Validator validate_input;
     Database employee_database;
     Employee New_employee, collected_data, Edited_employee;
+	Out_Put_Handler display_employee;
 
 	//Addresss
     address new_employee_addresss, edit_employee_addresss, collected_data_address;
@@ -66,7 +69,7 @@ public:
         cout << "====================================================" << el;
         cout << "1. Add New Employee." << el;
         cout << "2. Edit Employee data." << el;
-        cout << "3. Search Employee. (not yet working)" << el;
+        cout << "3. Search Employee. (partially working)" << el;
         cout << "4. Search Employee with high wage. (not yet working)" << el;
         cout << "5. Delete Employee data." << el;
         cout << "6. Exit Program." << el;
@@ -431,13 +434,136 @@ public:
                 break;
             }
 			}
+            cin.ignore();
 		}
 
 		//search employee data
         case 3: {
 			system("cls");
             cout << "Searching Employee data" << el;
-            break;
+            cout << "Search Employee by: " << el;
+			cout << "1. ID" << el;
+			cout << "2. Name" << el;
+			cout << "3. Role \"executive role ONLY\" " << el;
+			cout << "4. Return to main menu" << el;
+
+			int search_option;
+            while (!(cin >> search_option) || search_option < 1 || search_option > 4) {
+                cout << "Invalid choice. Please enter a valid input.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            switch (search_option) {
+			//search employee by ID
+            case 1: {
+				system("cls");
+                cout << "Enter employee ID you want to search or tpye \"exit\" to return to the main menu" << el;
+                cin.ignore();
+                while (true) {
+                    validate_state = 0; //reset validate_state
+                    input = user_input.get_input();
+                    validate_state = validate_input.validate_id(input);
+					if (validate_state == 0) {
+						cout << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << el;
+					}
+					else if (validate_state == -1) {
+						display_menu();
+					}
+					else if (validate_state == 1) {
+						cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
+					}
+					else if (validate_state == 2) {
+						break;
+					}
+                }
+                int index = employee_database.find_employee_by_id(stoll(input));
+                display_employee.display_employee_details(index);
+                cout << "press enter to return to the menu." << el;
+                string status;
+                getline(cin, status);
+                break;
+            }
+
+			//search employee by Name
+			case 2: {
+				system("cls");
+				cout << "Enter employee Name you want to search or tpye \"exit\" to return to the main menu" << el;
+				cin.ignore();
+				while (true) {
+					validate_state = 0; //reset validate_state
+					input = user_input.get_input();
+					validate_state = validate_input.validate_name(input);
+					if (validate_state == 0) {
+						cout << "Name not found, please enter a valid name or type \"exit\" to return to the main menu" << el;
+					}
+					else if (validate_state == -1) {
+						display_menu();
+					}
+					else if (validate_state == 1) {
+						cout << "Invalid input, please enter a valid Name or type \"exit\" to return to the main menu!" << el;
+					}
+					else if (validate_state == 2) {
+						cout << "Name have been found!" << el;
+                        break;
+					}
+				}
+				int index = employee_database.find_employee_by_name(input);
+				display_employee.display_employee_details(index);
+				cout << "press enter to return to the menu." << el;
+				string status;
+				getline(cin, status);
+				break;
+			}
+
+			//search employee by Role
+            case 3: {
+				system("cls");
+                cout << "---------------------------------------------------" << el;
+                cout << "| Title                            | Abbreviation |" << el;
+                cout << "---------------------------------------------------" << el;
+
+                // Display Executive Positions
+                cout << "Executive Roles:" << el;
+                for (const auto& pos : Executive_Positions) {
+                    cout << "| " << left << setw(32) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
+                }
+                cout << "---------------------------------------------------" << el;
+                cout << "Enter employee role you want to search or tpye \"exit\" to return to the main menu" << el;
+                cin.ignore();
+                while (true) {
+                    validate_state = 0; //reset validate_state
+                    input = user_input.get_input();
+                    validate_state = validate_input.validate_name(input);
+                    if (validate_state == 0) {
+                        cout << "role not found, please enter a used exectuive role or type \"exit\" to return to the main menu" << el;
+                    }
+                    else if (validate_state == -1) {
+                        display_menu();
+                    }
+                    else if (validate_state == 1) {
+                        cout << "Invalid input, please enter a valid executive role or type \"exit\" to return to the main menu!" << el;
+                    }
+                    else if (validate_state == 2) {
+                        cout << "Role have been found!" << el;
+                        break;
+                    }
+                }
+				cout << validate_state << el;
+				cout << input << el; 
+                int index = employee_database.find_employee_by_role(input);
+                display_employee.display_employee_details(index);
+                cout << "press enter to return to the menu." << el;
+                string status;
+                getline(cin, status);
+                break;
+            }
+
+			//return to main menu
+			case 4: {
+				display_menu();
+				break;
+			}
+            }
         }
 
 		//search employee with high wage
@@ -621,6 +747,9 @@ public:
 
             cout << "Enter near by land mark: " << el;
             input = user_input.get_input();
+            if (validate_input.validate_exit(input) == -1) {
+                display_menu();
+            }
             temp_near_by_landmarks = input;
 
             cout << "Enter Building Number: " << el;
@@ -758,7 +887,7 @@ public:
         collected_data_address.building_number = stoi(temp_building_num);
         collected_data_address.floor_number = stoi(temp_floor_num);
         collected_data_address.apartment_number = stoi(temp_apart_num);
-        collected_data.set_home_address(new_employee_addresss);
+		collected_data.set_home_address(collected_data_address);
 		//saving validated role
         collected_data.set_role(role);
 		//saving validated salary
@@ -766,6 +895,4 @@ public:
 
 		return collected_data;
     }
-
-
 };

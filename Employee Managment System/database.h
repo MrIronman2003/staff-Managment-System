@@ -17,6 +17,7 @@ class Database
 {
 protected:
     static vector<Employee> Employees_data; // Initialize the static member
+    address display_address_temp;
 
 public:
     // Constructor
@@ -25,6 +26,8 @@ public:
     //Setting 
     void add_employee(Employee new_Employee) {
         Employees_data.push_back(new_Employee);
+        display_address_temp = new_Employee.get_home_address();
+        
     }
 
     int find_employee_by_id(int search_id) {
@@ -97,6 +100,7 @@ public:
 
     int find_employee_by_role(string search_role) {
         // Convert search_role to lower case
+		cout << search_role << endl;
         transform(search_role.begin(), search_role.end(), search_role.begin(),
             [](unsigned char c) { return tolower(c); });
 
@@ -107,15 +111,17 @@ public:
                 [](unsigned char c) { return tolower(c); });
 
             if (employee_role == search_role) {
-                return 2; // return the index of the Employee object
+                cout << "index: " << i;
+                return i; // return the index of the Employee object
             }
         }
+        cout << "-1" << endl;
         return -1; // return -1 if no employee with the specified role was found
     }
 
     Employee retrive_data(int index) {
-
-        return Employees_data[index];
+		Employee retrived_data = Employees_data[index];
+        return retrived_data;
     }
 
 	void set_new_ID(int id, int index) {
