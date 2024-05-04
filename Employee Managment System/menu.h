@@ -69,7 +69,7 @@ public:
         cout << "====================================================" << el;
         cout << "1. Add New Employee." << el;
         cout << "2. Edit Employee data." << el;
-        cout << "3. Search Employee. (partially working)" << el;
+        cout << "3. Search Employee. " << el;
         cout << "4. Search Employee with high wage. (not yet working)" << el;
         cout << "5. Delete Employee data." << el;
         cout << "6. Exit Program." << el;
@@ -130,6 +130,7 @@ public:
             employee_database.add_employee(New_employee);
 
             //Confirmation to return to the main menu by pressing enter
+			system("cls");
             cout << "Employee data saved successfully!\n"
                 "press enter to return to the menu.\n";
             string status;
@@ -278,7 +279,7 @@ public:
 
                     cout << "Enter street name: " << el;
                     input = user_input.get_input();
-                    if (validate_input.validate_exit(input) == -1) {
+                    if (validate_input.check_exit(input) == true) {
                         display_menu();
                     }
                     temp_street_name = input;
@@ -290,7 +291,7 @@ public:
                     cout << "Enter Building Number: " << el;
                     while (true) {
                         input = user_input.get_input();
-                        if (validate_input.validate_exit(input) == -1) {
+                        if (validate_input.check_exit(input) == true) {
                             display_menu();
                         }
                         else if (validate_input.validate_int(input) == 1) {
@@ -305,7 +306,7 @@ public:
                     cout << "Enter Floor Number: " << el;
                     while (true) {
                         input = user_input.get_input();
-                        if (validate_input.validate_exit(input) == -1) {
+                        if (validate_input.check_exit(input) == true) {
                             display_menu();
                         }
                         else if (validate_input.validate_int(input) == 1) {
@@ -320,7 +321,7 @@ public:
                     cout << "Enter Apartment Number: " << el;
                     while (true) {
                         input = user_input.get_input();
-                        if (validate_input.validate_exit(input) == -1) {
+                        if (validate_input.check_exit(input) == true) {
                             display_menu();
                         }
                         else if (validate_input.validate_int(input) == 1) {
@@ -517,7 +518,7 @@ public:
 
 			//search employee by Role
             case 3: {
-				system("cls");
+                system("cls");
                 cout << "---------------------------------------------------" << el;
                 cout << "| Title                            | Abbreviation |" << el;
                 cout << "---------------------------------------------------" << el;
@@ -528,14 +529,23 @@ public:
                     cout << "| " << left << setw(32) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
                 }
                 cout << "---------------------------------------------------" << el;
-                cout << "Enter employee role you want to search or tpye \"exit\" to return to the main menu" << el;
+                cout << "Enter employee role you want to search or type \"exit\" to return to the main menu" << el;
                 cin.ignore();
                 while (true) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
-                    validate_state = validate_input.validate_name(input);
+
+                    // First, check if the role is a non-executive role
+                    validate_state = validate_input.validate_non_executive_role(input);
                     if (validate_state == 0) {
-                        cout << "role not found, please enter a used exectuive role or type \"exit\" to return to the main menu" << el;
+                        cout << "Role entered is a non-executive role, please enter an executive role or type \"exit\" to return to the main menu" << el;
+                        continue;
+                    }
+
+                    // Then, check if the role is an executive role
+                    validate_state = validate_input.validate_executive_role(input);
+                    if (validate_state == 0) {
+                        cout << "Role not found, please enter a valid executive role or type \"exit\" to return to the main menu" << el;
                     }
                     else if (validate_state == -1) {
                         display_menu();
@@ -544,15 +554,15 @@ public:
                         cout << "Invalid input, please enter a valid executive role or type \"exit\" to return to the main menu!" << el;
                     }
                     else if (validate_state == 2) {
-                        cout << "Role have been found!" << el;
+                        cout << "Role has been found!" << el;
                         break;
                     }
                 }
-				cout << validate_state << el;
-				cout << input << el; 
+                cout << validate_state << el;
+                cout << input << el;
                 int index = employee_database.find_employee_by_role(input);
                 display_employee.display_employee_details(index);
-                cout << "press enter to return to the menu." << el;
+                cout << "Press enter to return to the menu." << el;
                 string status;
                 getline(cin, status);
                 break;
@@ -624,6 +634,7 @@ public:
             break;
         }
 
+	    //exit program
         case 6: {
             exit_system();
             display_menu();
@@ -740,14 +751,14 @@ public:
 
             cout << "Enter street name: " << el;
             input = user_input.get_input();
-            if (validate_input.validate_exit(input) == -1) {
+            if (validate_input.check_exit(input) == true) {
                 display_menu();
             }
             temp_street_name = input;
 
             cout << "Enter near by land mark: " << el;
             input = user_input.get_input();
-            if (validate_input.validate_exit(input) == -1) {
+            if (validate_input.check_exit(input) == true) {
                 display_menu();
             }
             temp_near_by_landmarks = input;
@@ -755,7 +766,7 @@ public:
             cout << "Enter Building Number: " << el;
             while (true) {
                 input = user_input.get_input();
-                if (validate_input.validate_exit(input) == -1) {
+                if (validate_input.check_exit(input) == true) {
                     display_menu();
                 }
                 else if (validate_input.validate_int(input) == 1) {
@@ -770,7 +781,7 @@ public:
             cout << "Enter Floor Number: " << el;
             while (true) {
                 input = user_input.get_input();
-                if (validate_input.validate_exit(input) == -1) {
+                if (validate_input.check_exit(input) == true) {
                     display_menu();
                 }
                 else if (validate_input.validate_int(input) == 1) {
@@ -785,7 +796,7 @@ public:
             cout << "Enter Apartment Number: " << el;
             while (true) {
                 input = user_input.get_input();
-                if (validate_input.validate_exit(input) == -1) {
+                if (validate_input.check_exit(input) == true) {
                     display_menu();
                 }
                 else if (validate_input.validate_int(input) == 1) {
@@ -817,14 +828,12 @@ public:
         cout << "---------------------------------------------------" << el;
         cout << "| Title                            | Abbreviation |" << el;
         cout << "---------------------------------------------------" << el;
-
         // Display Executive Positions
         cout << "Executive Roles:" << el;
         for (const auto& pos : Executive_Positions) {
             cout << "| " << left << setw(32) << pos.name << " | " << setw(12) << pos.abbreviation << " |" << el;
         }
         cout << "---------------------------------------------------" << el;
-
         // Display Management and Operational Positions
         cout << "Management and Operational Roles:" << el;
         for (const auto& pos : positions_managment_operational) {
@@ -832,7 +841,6 @@ public:
         }
         cout << "---------------------------------------------------" << el;
         cout << "Enter Employee Role Abbreviation or type \"exit\" to return to the main menu!" << el;
-
         //Role Validation proccess
         while (1) {
             validate_state = 0; //reset validate_state
