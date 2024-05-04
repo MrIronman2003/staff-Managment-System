@@ -1,3 +1,6 @@
+#ifndef MENU_H
+#define MENU_H
+
 #include <iostream>
 #include <string>
 #include <limits>
@@ -20,12 +23,12 @@ class Menu {
     Employee_Validator validate_input;
     Database employee_database;
     Employee New_employee, collected_data, Edited_employee;
-	Out_Put_Handler display_employee;
+    Out_Put_Handler display_employee;
 
-	//Addresss
+    //Addresss
     address new_employee_addresss, edit_employee_addresss, collected_data_address;
 
-	//temp variables
+    //temp variables
     string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num, input;
 
     //vectors
@@ -59,7 +62,7 @@ class Menu {
     };
 
     int validate_state = 0;
-    
+
 public:
     void display_menu() {
         system("cls");
@@ -77,8 +80,6 @@ public:
     }
     void select_option() {
         int option;
-        if (cin.rdbuf()->in_avail())
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         // Validate user input
         while (!(cin >> option) || option < 1 || option > 6) {
             cout << "Invalid choice. Please enter a valid input.\n";
@@ -115,35 +116,61 @@ public:
         }
         case 6: {
             execute_option(6);
-			break;
+            break;
         }
         }
     }
     void execute_option(int choice) {
         switch (choice) {
-        //Add new employee
+            //Add new employee
         case 1: {
             system("cls");
+            cin.ignore();
             cout << "Adding new Employee Data" << el;
-			New_employee = collect_data();
+            New_employee = collect_data();
 
-			//saving new employee data in database
-            employee_database.add_employee(New_employee);
+			cout << "Employee Data " << el;
+			display_employee.display_employee_for_save(New_employee);
+			cout << "Are you sure you want to save this data?" << el;
+			cout << "1. YES" << el;
+			cout << "2. NO" << el;
 
-            //Confirmation to return to the main menu by pressing enter
-			system("cls");
-            cout << "Employee data saved successfully!" << el << "press enter to return to the menu." << el;
-            string status;
-            getline(cin, status);
+			int option;
+
+            while (!(cin >> option) || option < 1 || option > 6) {
+                cout << "Invalid choice. Please enter a valid input.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            // Switch case to handle different options
+            switch (option) {
+            case 1: {
+                //saving new employee data in database
+                employee_database.add_employee(New_employee);
+
+                //Confirmation to return to the main menu by pressing enter
+                cout << "Employee data saved successfully!" << el << "press enter to return to the menu." << el;
+                string status;
+                cin.ignore();
+                getline(cin, status);
+                break;
+            }
+            case 2: {
+
+                break;
+            }
+            }
             break;
         }
 
-        //Edit Employee Data 
+              //Edit Employee Data 
         case 2: {
             system("cls");
             cout << "Editing Employee Data: " << el;
 
             //look for the ID to edit
+            cin.ignore();
             cout << "Enter employee ID you want to edit or tpye \"exit\" to return to the main menu" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
@@ -167,8 +194,8 @@ public:
             //get employee index
             int index = employee_database.find_employee_by_id(stoll(input));
 
-			//display edit options
-			system("cls");
+            //display edit options
+            system("cls");
             cout << "what do you want to edit?" << el;
             cout << "1. ID" << el;
             cout << "2. Name" << el;
@@ -188,11 +215,12 @@ public:
             }
             switch (edit_option) {
 
-			//Edit Employee ID
+                //Edit Employee ID
             case 1: {
                 system("cls");
-				cout << "Editing Employee ID" << el;
-				cout << "Enter new ID or type \"exit\" to return to the main menu" << el;
+                cin.ignore();
+                cout << "Editing Employee ID" << el;
+                cout << "Enter new ID or type \"exit\" to return to the main menu" << el;
                 while (1) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
@@ -210,17 +238,18 @@ public:
                         cout << "ID is already taken, please enter a new ID!" << el;
                     }
                 }
-				long long ID = stoll(input);
-				employee_database.set_new_ID(ID, index);
+                long long ID = stoll(input);
+                employee_database.set_new_ID(ID, index);
                 break;
             }
 
-			//Edit Employee Name
+                  //Edit Employee Name
             case 2: {
                 system("cls");
-				cout << "Editing Employee Name" << el;
-				cout << "Enter new Name or type \"exit\" to return to the main menu" << el;
-				while (1) {
+                cin.ignore();
+                cout << "Editing Employee Name" << el;
+                cout << "Enter new Name or type \"exit\" to return to the main menu" << el;
+                while (1) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
                     validate_state = validate_input.validate_name(input);
@@ -237,41 +266,43 @@ public:
                         cout << "Name already exist, please enter a new Name!" << el;
                     }
                 }
-				string name = input;
+                string name = input;
                 employee_database.set_new_name(name, index);
                 break;
             }
 
-			//Edit Employee Age
+                  //Edit Employee Age
             case 3: {
                 system("cls");
-				cout << "Editing Employee Age" << el;
-				cout << "Enter new Age or type \"exit\" to return to the main menu" << el;
-				while (1) {
-					validate_state = 0; //reset validate_state
-					input = user_input.get_input();
-					validate_state = validate_input.validate_age(input);
-					if (validate_state == 0) {
-						break;
-					}
-					else if (validate_state == -1) {
-						display_menu();
-					}
-					else if (validate_state == 1) {
-						cout << "Invalid input, please enter a valid Age or type exit to return to the main menu!" << el;
-					}
-					else if (validate_state == 2) {
-						cout << "Age already exist, please enter a new Name!" << el;
-					}
-				}
+                cin.ignore();
+                cout << "Editing Employee Age" << el;
+                cout << "Enter new Age or type \"exit\" to return to the main menu" << el;
+                while (1) {
+                    validate_state = 0; //reset validate_state
+                    input = user_input.get_input();
+                    validate_state = validate_input.validate_age(input);
+                    if (validate_state == 0) {
+                        break;
+                    }
+                    else if (validate_state == -1) {
+                        display_menu();
+                    }
+                    else if (validate_state == 1) {
+                        cout << "Invalid input, please enter a valid Age or type exit to return to the main menu!" << el;
+                    }
+                    else if (validate_state == 2) {
+                        cout << "Age already exist, please enter a new Name!" << el;
+                    }
+                }
                 break;
             }
 
-			//Edit Employee Address
+                  //Edit Employee Address
             case 4: {
                 system("cls");
-				cout << "Editing Employee Address" << el;
-				cout << "Enter new Address or type \"exit\" to return to the main menu" << el;
+                cin.ignore();
+                cout << "Editing Employee Address" << el;
+                cout << "Enter new Address or type \"exit\" to return to the main menu" << el;
                 while (1) {
                     validate_state = 0; //reset validate_state
 
@@ -351,15 +382,16 @@ public:
                 edit_employee_addresss.building_number = stoi(temp_building_num);
                 edit_employee_addresss.floor_number = stoi(temp_floor_num);
                 edit_employee_addresss.apartment_number = stoi(temp_apart_num);
-				employee_database.set_new_address(edit_employee_addresss, index);
+                employee_database.set_new_address(edit_employee_addresss, index);
                 break;
             }
 
-			//Edit Employee Role
+                  //Edit Employee Role
             case 5: {
-				system("cls");
-				cout << "Editing Employee Role" << el;
-				cout << "Enter new Role or type \"exit\" to return to the main menu" << el;
+                system("cls");
+                cin.ignore();
+                cout << "Editing Employee Role" << el;
+                cout << "Enter new Role or type \"exit\" to return to the main menu" << el;
                 while (1) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
@@ -377,144 +409,149 @@ public:
                         cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to return to the main menu!" << el;
                     }
                 }
-				string role = input;
-				employee_database.set_new_role(role, index);
+                string role = input;
+                employee_database.set_new_role(role, index);
                 break;
             }
 
-			//Edit Employee Salary
+                  //Edit Employee Salary
             case 6: {
-				system("cls");
-				cout << "Editing Employee Salary" << el;
-				cout << "Enter new Salary or type \"exit\" to return to the main menu" << el;
+                system("cls");
+                cin.ignore();
+                cout << "Editing Employee Salary" << el;
+                cout << "Enter new Salary or type \"exit\" to return to the main menu" << el;
                 while (1) {
-					validate_state = 0; //reset validate_state
-					input = user_input.get_input();
-					validate_state = validate_input.validate_salary(input);
-					if (validate_state == 0) {
-						break;
-					}
-					else if (validate_state == -1) {
-						display_menu();
-					}
-					else if (validate_state == 1) {
-						cout << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << el;
-					}
-					else if (validate_state == 2) {
-						cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
-					}
+                    validate_state = 0; //reset validate_state
+                    input = user_input.get_input();
+                    validate_state = validate_input.validate_salary(input);
+                    if (validate_state == 0) {
+                        break;
+                    }
+                    else if (validate_state == -1) {
+                        display_menu();
+                    }
+                    else if (validate_state == 1) {
+                        cout << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << el;
+                    }
+                    else if (validate_state == 2) {
+                        cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
+                    }
                 }
-				float salary = stof(input);
-				employee_database.set_new_salary(salary, index);
+                float salary = stof(input);
+                employee_database.set_new_salary(salary, index);
                 break;
             }
 
-			//Edit All Employee Info
+                  //Edit All Employee Info
             case 7: {
-				system("cls");
-				cout << "Editing All Employee Info" << el;
+                system("cls");
+                cin.ignore();
+                cout << "Editing All Employee Info" << el;
                 //getting edited employee data
                 Edited_employee = collect_data();
-				//sending edited data to database to be saved
+                //sending edited data to database to be saved
                 employee_database.set_new_ID(Edited_employee.get_id(), index);
-				employee_database.set_new_name(Edited_employee.get_name(), index);
-				employee_database.set_new_age(Edited_employee.get_age(), index);
-				employee_database.set_new_address(Edited_employee.get_home_address(), index);
-				employee_database.set_new_role(Edited_employee.get_role(), index);
-				employee_database.set_new_salary(Edited_employee.get_salary(), index);
+                employee_database.set_new_name(Edited_employee.get_name(), index);
+                employee_database.set_new_age(Edited_employee.get_age(), index);
+                employee_database.set_new_address(Edited_employee.get_home_address(), index);
+                employee_database.set_new_role(Edited_employee.get_role(), index);
+                employee_database.set_new_salary(Edited_employee.get_salary(), index);
                 break;
             }
 
-		     //Return to main menu                  
+                  //Return to main menu                  
             case 8: {
-                display_menu(); 
+                display_menu();
                 break;
             }
-			}
-		}
+            }
+            break;
+        }
 
-		//search employee
+              //search employee
         case 3: {
-			system("cls");
+            system("cls");
             cout << "Searching Employee data" << el;
             cout << "Search Employee by: " << el;
-			cout << "1. ID" << el;
-			cout << "2. Name" << el;
-			cout << "3. Role \"executive role ONLY\" " << el;
-			cout << "4. Return to main menu" << el;
+            cout << "1. ID" << el;
+            cout << "2. Name" << el;
+            cout << "3. Role \"executive role ONLY\" " << el;
+            cout << "4. Return to main menu" << el;
 
-			int search_option;
+            int search_option;
             while (!(cin >> search_option) || search_option < 1 || search_option > 4) {
                 cout << "Invalid choice. Please enter a valid input." << el;
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             switch (search_option) {
-			//search employee by ID
+
+                //search employee by ID
             case 1: {
-				system("cls");
+                system("cls");
+                cin.ignore();
                 cout << "Enter employee ID you want to search or tpye \"exit\" to return to the main menu" << el;
                 while (true) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
                     validate_state = validate_input.validate_id(input);
-					if (validate_state == 0) {
-						cout << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << el;
-					}
-					else if (validate_state == -1) {
-						display_menu();
-					}
-					else if (validate_state == 1) {
-						cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
-					}
-					else if (validate_state == 2) {
-						break;
-					}
+                    if (validate_state == 0) {
+                        cout << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << el;
+                    }
+                    else if (validate_state == -1) {
+                        display_menu();
+                    }
+                    else if (validate_state == 1) {
+                        cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
+                    }
+                    else if (validate_state == 2) {
+                        break;
+                    }
                 }
                 int index = employee_database.find_employee_by_id(stoll(input));
                 display_employee.display_employee_details(index);
                 cout << "press enter to return to the menu." << el;
                 string status;
-                if (cin.rdbuf()->in_avail())
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, status);
                 break;
 
             }
 
-			//search employee by Name
-			case 2: {
-				system("cls");
-				cout << "Enter employee Name you want to search or tpye \"exit\" to return to the main menu" << el;
-				while (true) {
-					validate_state = 0; //reset validate_state
-					input = user_input.get_input();
-					validate_state = validate_input.validate_name(input);
-					if (validate_state == 0) {
-						cout << "Name not found, please enter a valid name or type \"exit\" to return to the main menu" << el;
-					}
-					else if (validate_state == -1) {
-						display_menu();
-					}
-					else if (validate_state == 1) {
-						cout << "Invalid input, please enter a valid Name or type \"exit\" to return to the main menu!" << el;
-					}
-					else if (validate_state == 2) {
-						cout << "Name have been found!" << el;
+                  //search employee by Name
+            case 2: {
+                system("cls");
+                cin.ignore();
+                cout << "Enter employee Name you want to search or tpye \"exit\" to return to the main menu" << el;
+                while (true) {
+                    validate_state = 0; //reset validate_state
+                    input = user_input.get_input();
+                    validate_state = validate_input.validate_name(input);
+                    if (validate_state == 0) {
+                        cout << "Name not found, please enter a valid name or type \"exit\" to return to the main menu" << el;
+                    }
+                    else if (validate_state == -1) {
+                        display_menu();
+                    }
+                    else if (validate_state == 1) {
+                        cout << "Invalid input, please enter a valid Name or type \"exit\" to return to the main menu!" << el;
+                    }
+                    else if (validate_state == 2) {
+                        cout << "Name have been found!" << el;
                         break;
-					}
-				}
-				int index = employee_database.find_employee_by_name(input);
-				display_employee.display_employee_details(index);
-				cout << "press enter to return to the menu." << el;
-				string status;
-				getline(cin, status);
-				break;
-			}
+                    }
+                }
+                int index = employee_database.find_employee_by_name(input);
+                display_employee.display_employee_details(index);
+                cout << "press enter to return to the menu." << el;
+                string status;
+                getline(cin, status);
+                break;
+            }
 
-			//search employee by Role
+                  //search employee by Role
             case 3: {
                 system("cls");
+                cin.ignore();
                 cout << "---------------------------------------------------" << el;
                 cout << "| Title                            | Abbreviation |" << el;
                 cout << "---------------------------------------------------" << el;
@@ -563,98 +600,100 @@ public:
                 break;
             }
 
-			//return to main menu
-			case 4: {
-				display_menu();
-				break;
-			}
+                  //return to main menu
+            case 4: {
+                display_menu();
+                break;
             }
+            }
+
             break;
-            
+
         }
 
-		//search employee with high wage
+              //search employee with high wage
         case 4: {
             cout << "Searching Employee with High Wage" << el;
-			vector<Employee> high_wage_employees = employee_database.find_employees_with_high_wage();
-			validate_state = validate_input.highwage_stat(high_wage_employees);
+            vector<Employee> high_wage_employees = employee_database.find_employees_with_high_wage();
+            validate_state = validate_input.highwage_stat(high_wage_employees);
             if (validate_state == 1) {
                 display_employee.display_employee_details(high_wage_employees);
-			}
-			else if (validate_state == 0) {
-				cout << "No employee with high wage found!" << el;
-			}
-			cout << "press enter to return to the menu." << el;
-			string status;
-            if (cin.rdbuf()->in_avail())
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			getline(cin, status);
-			
+            }
+            else if (validate_state == 0) {
+                cout << "No employee with high wage found!" << el;
+            }
+            cout << "press enter to return to the menu." << el;
+            string status;
+            cin.ignore();
+            getline(cin, status);
+
 
             break;
         }
 
-		//delete employee data
+              //delete employee data
         case 5: {
-			system("cls");
+            system("cls");
+            cin.ignore();
             cout << "Deleting Employee data" << el;
-			cout << "Enter employee ID you want to delete or tpye \"exit\" to return to the main menu" << el;
-            if (cin.rdbuf()->in_avail())
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			while (1) {
-				validate_state = 0; //reset validate_state
-				input = user_input.get_input();
-				validate_state = validate_input.validate_id(input);
-				if (validate_state == 0) {
-					cout << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << el;
-				}
-				else if (validate_state == -1) {
-					display_menu();
-				}
-				else if (validate_state == 1) {
-					cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
-				}
-				else if (validate_state == 2) {
-					break;
-				}
-			}
-
-			//confimation to delete employee data
-			system("cls");
-            cout << "Are you sure you want to delete employee with id: " << input << "?" << el;
-			cout << "Warning: This action cannot be undone!" << el << "1. YES." << el << "2. NO." << el;
-				int option;
-				while (!(cin >> option) || option < 1 || option > 2) {
-					cout << "Invalid choice. Please enter a valid input.\n";
-					cin.clear();
-					cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				}
-				switch (option) {
-				case 1: {
-                    employee_database.delete_employee(employee_database.find_employee_by_id(stoll(input)));
-					cout << "Employee data deleted successfully!" << el << "press enter to return to the menu." << el;
-                    string status;
-                    if (cin.rdbuf()->in_avail())
-                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    getline(cin, status);
-					break;
-				}
-				case 2: {
+            cout << "Enter employee ID you want to delete or tpye \"exit\" to return to the main menu" << el;
+            while (1) {
+                validate_state = 0; //reset validate_state
+                input = user_input.get_input();
+                validate_state = validate_input.validate_id(input);
+                if (validate_state == 0) {
+                    cout << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << el;
+                }
+                else if (validate_state == -1) {
                     display_menu();
+                }
+                else if (validate_state == 1) {
+                    cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
+                }
+                else if (validate_state == 2) {
                     break;
                 }
-				}
-			
+            }
+            system("cls");
+			//get index of employee to be deleted
+			int index = employee_database.find_employee_by_id(stoll(input));
+			//print employee data to be deleted
+			display_employee.display_employee_details(index);
+
+            //confimation to delete employee data
+            cout << "Are you sure you want to delete employee with id: " << input << "?" << el;
+            cout << "Warning: This action cannot be undone!" << el << "1. YES." << el << "2. NO." << el;
+            int option;
+            while (!(cin >> option) || option < 1 || option > 2) {
+                cout << "Invalid choice. Please enter a valid input.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            switch (option) {
+            case 1: {
+                employee_database.delete_employee(employee_database.find_employee_by_id(stoll(input)));
+                cout << "Employee data deleted successfully!" << el << "press enter to return to the menu." << el;
+                string status;
+                cin.ignore();
+                getline(cin, status);
+                break;
+            }
+            case 2: {
+                display_menu();
+                break;
+            }
+            }
+
             break;
         }
 
-	    //exit program
+              //exit program
         case 6: {
             exit_system();
             display_menu();
         }
         }
-    
+
         //return to the main menu after option have been executed
         display_menu();
     }
@@ -681,8 +720,11 @@ public:
         }
         case 2: {
             // If the user chooses to exit, display the credits and exit the program
-			system("cls");
-            cout << "Program made by:" << el << "Mahmoud Ahmed\tID: 234051" << el << "Ahmed Hussein\tID: 225381" << el << el << "Exiting Program . . ." << el;
+            system("cls");
+            cout << "Program made by:" << el << "Mahmoud Ahmed\tID: 234051" << el << "Ahmed Hussein\tID: 225381" << el << el << "press enter to exit the program" << el;
+            string status;
+            cin.ignore();
+            getline(cin, status);
             exit(1);
             break;
         }
@@ -904,12 +946,13 @@ public:
         collected_data_address.building_number = stoi(temp_building_num);
         collected_data_address.floor_number = stoi(temp_floor_num);
         collected_data_address.apartment_number = stoi(temp_apart_num);
-		collected_data.set_home_address(collected_data_address);
-		//saving validated role
+        collected_data.set_home_address(collected_data_address);
+        //saving validated role
         collected_data.set_role(role);
-		//saving validated salary
+        //saving validated salary
         collected_data.set_salary(salary);
 
-		return collected_data;
+        return collected_data;
     }
 };
+#endif

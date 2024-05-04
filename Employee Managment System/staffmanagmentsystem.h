@@ -13,7 +13,13 @@
 using namespace std;
 #define el "\n"
 
-class Staff_Managment_System {
+class Staff_Managment_System : public Database, public Menu{
+public:
+	void run() {
+		while (1) {
+			display_menu();
+		}
+	}
 
 };
 #endif

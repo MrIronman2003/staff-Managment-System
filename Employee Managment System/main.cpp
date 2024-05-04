@@ -5,17 +5,16 @@
 #include "employee.h"
 #include "validator.h"
 #include "inputhandler.h"
+#include "staffmanagmentsystem.h"
 #include "menu.h"
 
 using namespace std;
 #define el "\n"
 
 int main() {
-	Database Employees_database;
-	Menu main_menu;
-	while (1) {
-		main_menu.display_menu();
-	}
+
+	Staff_Managment_System system;
+	system.run();
 
 	return 0;
 }
