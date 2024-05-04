@@ -70,14 +70,15 @@ public:
         cout << "1. Add New Employee." << el;
         cout << "2. Edit Employee data." << el;
         cout << "3. Search Employee. " << el;
-        cout << "4. Search Employee with high wage. (not yet working)" << el;
+        cout << "4. Search Employee with high wage. " << el;
         cout << "5. Delete Employee data." << el;
         cout << "6. Exit Program." << el;
         select_option();
     }
     void select_option() {
         int option;
-
+        if (cin.rdbuf()->in_avail())
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         // Validate user input
         while (!(cin >> option) || option < 1 || option > 6) {
             cout << "Invalid choice. Please enter a valid input.\n";
@@ -131,8 +132,7 @@ public:
 
             //Confirmation to return to the main menu by pressing enter
 			system("cls");
-            cout << "Employee data saved successfully!\n"
-                "press enter to return to the menu.\n";
+            cout << "Employee data saved successfully!" << el << "press enter to return to the menu." << el;
             string status;
             getline(cin, status);
             break;
@@ -145,7 +145,6 @@ public:
 
             //look for the ID to edit
             cout << "Enter employee ID you want to edit or tpye \"exit\" to return to the main menu" << el;
-            cin.ignore();
             while (1) {
                 validate_state = 0; //reset validate_state
                 input = user_input.get_input();
@@ -167,6 +166,8 @@ public:
 
             //get employee index
             int index = employee_database.find_employee_by_id(stoll(input));
+
+			//display edit options
 			system("cls");
             cout << "what do you want to edit?" << el;
             cout << "1. ID" << el;
@@ -186,12 +187,12 @@ public:
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             switch (edit_option) {
+
 			//Edit Employee ID
             case 1: {
                 system("cls");
 				cout << "Editing Employee ID" << el;
 				cout << "Enter new ID or type \"exit\" to return to the main menu" << el;
-				cin.ignore();
                 while (1) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
@@ -219,7 +220,6 @@ public:
                 system("cls");
 				cout << "Editing Employee Name" << el;
 				cout << "Enter new Name or type \"exit\" to return to the main menu" << el;
-				cin.ignore();
 				while (1) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
@@ -247,7 +247,6 @@ public:
                 system("cls");
 				cout << "Editing Employee Age" << el;
 				cout << "Enter new Age or type \"exit\" to return to the main menu" << el;
-				cin.ignore();
 				while (1) {
 					validate_state = 0; //reset validate_state
 					input = user_input.get_input();
@@ -273,7 +272,6 @@ public:
                 system("cls");
 				cout << "Editing Employee Address" << el;
 				cout << "Enter new Address or type \"exit\" to return to the main menu" << el;
-				cin.ignore();
                 while (1) {
                     validate_state = 0; //reset validate_state
 
@@ -362,7 +360,6 @@ public:
 				system("cls");
 				cout << "Editing Employee Role" << el;
 				cout << "Enter new Role or type \"exit\" to return to the main menu" << el;
-				cin.ignore();
                 while (1) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
@@ -390,7 +387,6 @@ public:
 				system("cls");
 				cout << "Editing Employee Salary" << el;
 				cout << "Enter new Salary or type \"exit\" to return to the main menu" << el;
-				cin.ignore();
                 while (1) {
 					validate_state = 0; //reset validate_state
 					input = user_input.get_input();
@@ -435,10 +431,9 @@ public:
                 break;
             }
 			}
-            cin.ignore();
 		}
 
-		//search employee data
+		//search employee
         case 3: {
 			system("cls");
             cout << "Searching Employee data" << el;
@@ -450,7 +445,7 @@ public:
 
 			int search_option;
             while (!(cin >> search_option) || search_option < 1 || search_option > 4) {
-                cout << "Invalid choice. Please enter a valid input.\n";
+                cout << "Invalid choice. Please enter a valid input." << el;
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
@@ -459,7 +454,6 @@ public:
             case 1: {
 				system("cls");
                 cout << "Enter employee ID you want to search or tpye \"exit\" to return to the main menu" << el;
-                cin.ignore();
                 while (true) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
@@ -481,15 +475,17 @@ public:
                 display_employee.display_employee_details(index);
                 cout << "press enter to return to the menu." << el;
                 string status;
+                if (cin.rdbuf()->in_avail())
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, status);
                 break;
+
             }
 
 			//search employee by Name
 			case 2: {
 				system("cls");
 				cout << "Enter employee Name you want to search or tpye \"exit\" to return to the main menu" << el;
-				cin.ignore();
 				while (true) {
 					validate_state = 0; //reset validate_state
 					input = user_input.get_input();
@@ -530,7 +526,6 @@ public:
                 }
                 cout << "---------------------------------------------------" << el;
                 cout << "Enter employee role you want to search or type \"exit\" to return to the main menu" << el;
-                cin.ignore();
                 while (true) {
                     validate_state = 0; //reset validate_state
                     input = user_input.get_input();
@@ -574,11 +569,28 @@ public:
 				break;
 			}
             }
+            break;
+            
         }
 
 		//search employee with high wage
         case 4: {
-            cout << "Search Employee with High Wage selected";
+            cout << "Searching Employee with High Wage" << el;
+			vector<Employee> high_wage_employees = employee_database.find_employees_with_high_wage();
+			validate_state = validate_input.highwage_stat(high_wage_employees);
+            if (validate_state == 1) {
+                display_employee.display_employee_details(high_wage_employees);
+			}
+			else if (validate_state == 0) {
+				cout << "No employee with high wage found!" << el;
+			}
+			cout << "press enter to return to the menu." << el;
+			string status;
+            if (cin.rdbuf()->in_avail())
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			getline(cin, status);
+			
+
             break;
         }
 
@@ -587,7 +599,8 @@ public:
 			system("cls");
             cout << "Deleting Employee data" << el;
 			cout << "Enter employee ID you want to delete or tpye \"exit\" to return to the main menu" << el;
-			cin.ignore();
+            if (cin.rdbuf()->in_avail())
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			while (1) {
 				validate_state = 0; //reset validate_state
 				input = user_input.get_input();
@@ -621,7 +634,8 @@ public:
                     employee_database.delete_employee(employee_database.find_employee_by_id(stoll(input)));
 					cout << "Employee data deleted successfully!" << el << "press enter to return to the menu." << el;
                     string status;
-                    cin.ignore();
+                    if (cin.rdbuf()->in_avail())
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     getline(cin, status);
 					break;
 				}
@@ -647,16 +661,14 @@ public:
     void exit_system() {
         // Clear the console and display the exit message
         system("cls");
-        cout << "Staff Management Program\n\n";
-        cout << "Are you sure you want to exit the program?\n"
-            "1. No.\n"
-            "2. Yes.\n";
+        cout << "Staff Management Program" << el << el;
+        cout << "Are you sure you want to exit the program?" << el "1. No." << el << "2. Yes." << el;
 
         int option;
 
         // Validate the user's choice
         while (!(cin >> option) || option < 1 || option > 2) {
-            cout << "Invalid choice. Please enter a valid input.\n";
+            cout << "Invalid choice. Please enter a valid input." << el;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -669,10 +681,8 @@ public:
         }
         case 2: {
             // If the user chooses to exit, display the credits and exit the program
-            cout << "Program made by:\n"
-                "Mahmoud Ahmed\tID: 234051\n"
-                "Ahmed Hussein\tID: 225381\n"
-                "Exiting Program...\n";
+			system("cls");
+            cout << "Program made by:" << el << "Mahmoud Ahmed\tID: 234051" << el << "Ahmed Hussein\tID: 225381" << el << el << "Exiting Program . . ." << el;
             exit(1);
             break;
         }
@@ -682,7 +692,6 @@ public:
     Employee collect_data() {
         //Handle ID
         cout << "Enter ID or type \"exit\" to return to the main menu!" << el;
-        cin.ignore(); //clear buffer
         while (1) {
             validate_state = 0; //reset validate_state
             input = user_input.get_input();

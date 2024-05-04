@@ -81,6 +81,7 @@ class Employee_Validator {
     };
 
 public:
+    //Validate Inputs
     int validate_id(const string& ID_check) {
         try {
             long long ID = stoll(ID_check);  // Convert input to long long
@@ -103,7 +104,6 @@ public:
             return 1;  // Invalid input (out of range)
         }
     }
-
     int validate_name(string name_check) {
         if (check_exit(name_check) == true) {
             return -1;
@@ -115,7 +115,6 @@ public:
             return 0;
         }
     }
-
     int validate_age(const string& age_check) {
         try {
             int age = stoi(age_check);  // Convert input to integer
@@ -136,7 +135,6 @@ public:
             return 1;  // Invalid input (out of range)
         }
     }
-
     int validate_home_address(const string& check_street, const string& check_nearby_landmark,
         const string& check_building_number, const string& check_floor_num,
         const string& check_appart_num) {
@@ -168,7 +166,6 @@ public:
             return 1;  // Invalid input (out of range)
         }
     }
-
     int validate_role(const string& role_check) {
         if (check_exit(role_check) == true) {
             return -1; // Return to main menu
@@ -207,7 +204,27 @@ public:
         }
         return 1; // Return error
     }
+    int validate_salary(string salary_check) {
+        try {
+            long long salary = stoll(salary_check);  // Convert input to long long
+            if (salary > 10000000000) {
+                return 1;  // Invalid input (large number)
+            }
+            // Assuming `find_employee_by_id` exists in the `Database` class
+            return 0;  // No error
+        }
+        catch (const invalid_argument&) {
+            if (check_exit(salary_check) == true) {
+                return -1;  // User entered "exit"
+            }
+            return 1;  // Invalid input
+        }
+        catch (const out_of_range&) {
+            return 1;  // Invalid input (out of range)
+        }
+    }
 
+	//Validate specific roles
     int validate_executive_role(const string& role_check) {
         if (check_exit(role_check) == true) {
             return -1; // Return to main menu
@@ -235,7 +252,6 @@ public:
         }
         return 1; // Return error
     }
-
     int validate_non_executive_role(const string& role_check) {
         if (check_exit(role_check) == true) {
             return -1; // Return to main menu
@@ -264,26 +280,7 @@ public:
         return 1; // Return error
     }
 
-    int validate_salary(string salary_check) {
-        try {
-            long long salary = stoll(salary_check);  // Convert input to long long
-            if (salary > 10000000000) {
-                return 1;  // Invalid input (large number)
-            }
-            // Assuming `find_employee_by_id` exists in the `Database` class
-            return 0;  // No error
-        }
-        catch (const invalid_argument&) {
-            if (check_exit(salary_check) == true ) {
-                return -1;  // User entered "exit"
-            }
-            return 1;  // Invalid input
-        }
-        catch (const out_of_range&) {
-            return 1;  // Invalid input (out of range)
-        }
-    }
-
+	//validate specific inputs
     int validate_int(string check_int) {
         try {
             long long input_to_int = stoll(check_int);  // Convert input to long long
@@ -302,7 +299,6 @@ public:
             return 1;  // Invalid input (out of range)
         }
     }
-
     bool check_exit(const string& input) {
         // Create a copy of the input string
         string lower_input = input;
@@ -318,7 +314,17 @@ public:
             return false;
         }
     }
+	bool highwage_stat(const vector<Employee>& employees) {
+		// Check if the vector is empty
+        if (employees.empty()) {
+            return false;
+        }
+		else {
+			return true;
+		}
+	}
 
+	//Return positions for printing
     vector<CompanyPosition> return_positions() {
         return positions;
     }

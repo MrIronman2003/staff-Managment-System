@@ -17,6 +17,8 @@ private:
 public:
 	string get_input() {
 		input = "0"; //reset input value
+		if (cin.rdbuf()->in_avail())
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		getline(cin, input);
 		return input;
 	}

@@ -28,7 +28,7 @@ public:
         
     }
 
-    //Find functions
+    //Search functions
     int find_employee_by_id(long long search_id) {
         for (int i = 0; i < Employees_data.size(); i++) {
             if (Employees_data[i].get_id() == search_id) {
@@ -54,14 +54,6 @@ public:
         }
         return -1; // return -1 if no employee found
     }
-    int find_employees_with_high_wage() {
-        for (int i = 0; i < Employees_data.size(); i++) {
-            if (Employees_data[i].get_salary() >= 20000) {
-                return i; // return the index of the Employee object
-            }
-        }
-        return -1; // return -1 if no employee with salary higher than 20,000 found
-    }
     int find_employee_by_role(string search_role) {
         // Convert search_role to lower case
         transform(search_role.begin(), search_role.end(), search_role.begin(),
@@ -78,6 +70,22 @@ public:
             }
         }
         return -1; // return -1 if no employee with the specified role was found
+    }
+    vector<Employee> find_employees_with_high_wage() {
+        // Create a new vector to store employees with high wage
+        vector<Employee> employees_with_highwage;
+
+        // Loop through all employees
+        for (int i = 0; i < Employees_data.size(); i++) {
+            // Check if the employee's salary is higher than 20,000
+            if (Employees_data[i].get_salary() >= 20000) {
+                // If so, add the employee to the high wage vector
+                employees_with_highwage.push_back(Employees_data[i]);
+            }
+        }
+
+        // Return the vector of employees with high wage
+        return employees_with_highwage;
     }
 
 	//Retrive data function
@@ -109,7 +117,9 @@ public:
             cin >> new_salary;
             cout << "Enter new home address: ";
             address new_home_address;
-            cin.ignore();
+            if (cin.rdbuf()->in_avail())
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 
             // Update employee data
             Employees_data[index].set_name(new_name);
