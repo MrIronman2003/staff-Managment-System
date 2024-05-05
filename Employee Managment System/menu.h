@@ -13,8 +13,18 @@
 #include "validator.h"
 #include "inputhandler.h"
 
+//defines
 using namespace std;
 #define el "\n"
+// ANSI escape codes for color
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+#define RESET "\033[0m"
+
 
 vector<Employee> Database::Employees_data;
 
@@ -68,14 +78,14 @@ public:
         system("cls");
         cout << "Staff Management System" << el << el;
         cout << "====================================================" << el;
-        cout << "Main Menu" << el;
+        cout << YELLOW << "Main Menu" << RESET << el;
         cout << "====================================================" << el;
-        cout << "1. Add New Employee." << el;
-        cout << "2. Edit Employee data." << el;
-        cout << "3. Search Employee. " << el;
-        cout << "4. Search Employee with high wage. " << el;
-        cout << "5. Delete Employee data." << el;
-        cout << "6. Exit Program." << el;
+        cout << GREEN << "1. Add New Employee." << RESET << el;
+        cout << BLUE << "2. Edit Employee data." << RESET << el;
+        cout << CYAN << "3. Search Employee. " << RESET << el;
+        cout << MAGENTA << "4. Search Employee with high wage. " << RESET << el;
+        cout << RED << "5. Delete Employee data." << el;
+        cout << "6. Exit Program." << RESET << el;
         select_option();
     }
     void select_option() {
@@ -132,8 +142,8 @@ public:
 			cout << "Employee Data " << el;
 			display_employee.display_employee_for_save(New_employee);
 			cout << "Are you sure you want to save this data?" << el;
-			cout << "1. YES" << el;
-			cout << "2. NO" << el;
+			cout << GREEN << "1. YES" << el;
+			cout << RED << "2. NO" << RESET << el;
 
 			int option;
 
@@ -475,13 +485,13 @@ public:
                 input = user_input.get_input();
                 validate_state = validate_input.validate_id(input);
                 if (validate_state == 0) {
-                    cout << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << el;
+                    cout << RED << "ID not found, please enter a valid id or type \"exit\" to return to the main menu" << RESET << el;
                 }
                 else if (validate_state == -1) {
                     display_menu();
                 }
                 else if (validate_state == 1) {
-                    cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
+                    cout << RED << "Invalid input, please enter a valid ID or exit to return to the main menu!" << RESET << el;
                 }
                 else if (validate_state == 2) {
                     break;
@@ -495,7 +505,7 @@ public:
 
             //confimation to delete employee data
             cout << "Are you sure you want to delete employee with id: " << input << "?" << el;
-            cout << "Warning: This action cannot be undone!" << el << "1. YES." << el << "2. NO." << el;
+            cout << RED << "Warning: This action CANNOT reverted!" << el << "1. YES." << el << GREEN << "2. NO." << RESET << el;
             int option;
             while (!(cin >> option) || option < 1 || option > 2) {
                 cout << "Invalid choice. Please enter a valid input.\n";
@@ -534,7 +544,7 @@ public:
         // Clear the console and display the exit message
         system("cls");
         cout << "Staff Management Program" << el << el;
-        cout << "Are you sure you want to exit the program?" << el "1. No." << el << "2. Yes." << el;
+        cout << "Are you sure you want to exit the program?" << el << GREEN << "1. No." << el << RED << "2. Yes." << RESET << el;
 
         int option;
 
@@ -590,10 +600,10 @@ public:
                 display_menu();
             }
             else if (validate_state == 1) {
-                cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
+                cout << RED << "Invalid input, please enter a valid ID or exit to return to the main menu!" << RESET << el;
             }
             else if (validate_state == 2) {
-                cout << "ID is already taken, please enter a new ID!" << el;
+                cout << RED << "ID is already taken, please enter a new ID!" << RESET<< el;
             }
         }
         long long ID = stoll(input);
@@ -612,11 +622,8 @@ public:
             else if (validate_state == -1) {
                 display_menu();
             }
-            else if (validate_state == 1) {
-                cout << "Invalid input, please enter a valid Name or exit to return to the main menu!" << el;
-            }
             else if (validate_state == 2) {
-                cout << "Name already exist, please enter a new Name!" << el;
+                cout << RED << "Name already exist, please enter a new Name!" << RESET << el;
             }
         }
         string name = input;
@@ -636,10 +643,10 @@ public:
                 display_menu();
             }
             else if (validate_state == 1) {
-                cout << "Invalid input, please enter a valid Age or type exit to return to the main menu!" << el;
+                cout << RED << "Invalid input, please enter a valid Age or type exit to return to the main menu!" << RESET << el;
             }
             else if (validate_state == 2) {
-                cout << "Age already exist, please enter a new Name!" << el;
+                cout << RED << "Age already exist, please enter a new Name!" << RESET << el;
             }
         }
         int age = stoi(input);
@@ -673,7 +680,7 @@ public:
                     display_menu();
                 }
                 else if (validate_input.validate_int(input) == 1) {
-                    cout << "invalid input, please enter a valid number!" << el;
+                    cout << RED << "invalid input, please enter a valid number!" << RESET << el;
                 }
                 else {
                     break;
@@ -688,7 +695,7 @@ public:
                     display_menu();
                 }
                 else if (validate_input.validate_int(input) == 1) {
-                    cout << "invalid input, please enter a valid number!" << el;
+                    cout << RED << "invalid input, please enter a valid number!" << RESET << el;;
                 }
                 else {
                     break;
@@ -703,7 +710,7 @@ public:
                     display_menu();
                 }
                 else if (validate_input.validate_int(input) == 1) {
-                    cout << "invalid input, please enter a valid number!" << el;
+                    cout << RED << "invalid input, please enter a valid number!" << RESET << el;
                 }
                 else {
                     break;
@@ -718,7 +725,7 @@ public:
                 display_menu();
             }
             else if (validate_state == 1) {
-                cout << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << el;
+                cout << RED << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << RESET << el;
             }
             else if (validate_state == 0) {
                 break;
@@ -762,10 +769,10 @@ public:
                 display_menu();
             }
             else if (validate_state == 1) {
-                cout << "Invalid input, please enter a valid Role or type \"exit\" to return to the main menu!" << el;
+                cout << RED << "Invalid input, please enter a valid Role or type \"exit\" to return to the main menu!" << RESET << el;
             }
             else if (validate_state == 2) {
-                cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to return to the main menu!" << el;
+                cout << RED << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to return to the main menu!" << RESET << el;
             }
         }
         //save validated role
@@ -786,10 +793,10 @@ public:
                 display_menu();
             }
             else if (validate_state == 1) {
-                cout << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << el;
+                cout << RED << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << RESET << el;
             }
             else if (validate_state == 2) {
-                cout << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << el;
+                cout << RED << "Executive role is taken by another employee, please reneter your role, or type \"exit\" to retunr to the main menu!" << RESET << el;
             }
         }
         float salary = stof(input);
