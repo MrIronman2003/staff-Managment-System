@@ -8,7 +8,7 @@ using namespace std;
 // ANSI escape codes for color
 #define RED "\033[31m"
 #define GREEN "\033[32m"
-#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
 #define RESET "\033[0m"
 
 int main() {
@@ -49,7 +49,7 @@ int main() {
 )" << RESET << el;
 
     cout << "Program made by: " << "\n";
-    cout << GREEN << "Mahmoud Ahmed \t ID: 234051" << RESET << "\n";
+    cout << BLUE << "Mahmoud Ahmed \t ID: 234051" << RESET << "\n";
     cout << GREEN << "Ahmed Hussein \t ID: 225381" << RESET << "\n";
     cout << "Press enter to launch the program." << "\n";
     string status;
