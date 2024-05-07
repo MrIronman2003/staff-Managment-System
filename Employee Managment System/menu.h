@@ -28,7 +28,7 @@ using namespace std;
 
 vector<Employee> Database::Employees_data;
 
-class Menu {
+class Menu : public Out_Put_Handler{
     Input_Handler user_input;
     Employee_Validator validate_input;
     Database employee_database;
@@ -78,7 +78,7 @@ public:
         system("cls");
         cout << "Staff Management System" << el << el;
         cout << "====================================================" << el;
-        cout << YELLOW << "Main Menu" << RESET << el;
+        cout << YELLOW << setw(27) <<"Main Menu" << RESET << el;
         cout << "====================================================" << el;
         cout << GREEN << "1. Add New Employee." << RESET << el;
         cout << BLUE << "2. Edit Employee data." << RESET << el;
