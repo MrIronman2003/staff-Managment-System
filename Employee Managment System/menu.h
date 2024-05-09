@@ -36,7 +36,6 @@ class Menu : public Out_Put_Handler {
     Employee_Validator validate_input;
     Database employee_database;
     Employee New_employee, collected_data, Edited_employee;
-    Out_Put_Handler display_employee;
 
     //Addresss
     address new_employee_addresss, edit_employee_addresss, collected_data_address;
@@ -77,20 +76,6 @@ class Menu : public Out_Put_Handler {
     int validate_state = 0;
 
 public:
-    void display_menu() {
-        system("cls");
-        cout << "Staff Management System" << el << el;
-        cout << "====================================================" << el;
-        cout << YELLOW << setw(27) << "Main Menu" << RESET << el;
-        cout << "====================================================" << el;
-        cout << GREEN << "1. Add New Employee." << RESET << el;
-        cout << BLUE << "2. Edit Employee data." << RESET << el;
-        cout << CYAN << "3. Search Employee. " << RESET << el;
-        cout << MAGENTA << "4. Search Employee with high wage. " << RESET << el;
-        cout << RED << "5. Delete Employee data." << el;
-        cout << "6. Exit Program." << RESET << el;
-        select_option();
-    }
     void select_option() {
         int option;
         // Validate user input
@@ -143,7 +128,7 @@ public:
             New_employee = collect_data();
 
             cout << "Employee Data " << el;
-            display_employee.display_employee_for_save(New_employee);
+            display_employee_for_save(New_employee);
             cout << "Are you sure you want to save this data?" << el;
             cout << GREEN << "1. YES" << el;
             cout << RED << "2. NO" << RESET << el;
@@ -194,6 +179,7 @@ public:
                 }
                 else if (validate_state == -1) {
                     display_menu();
+                    select_option();
                 }
                 else if (validate_state == 1) {
                     cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
@@ -308,6 +294,7 @@ public:
                   //Return to main menu                  
             case 8: {
                 display_menu();
+                select_option();
                 break;
             }
             }
@@ -346,6 +333,7 @@ public:
                     }
                     else if (validate_state == -1) {
                         display_menu();
+                        select_option();
                     }
                     else if (validate_state == 1) {
                         cout << "Invalid input, please enter a valid ID or exit to return to the main menu!" << el;
@@ -355,7 +343,7 @@ public:
                     }
                 }
                 int index = employee_database.find_employee_by_id(stoll(input));
-                display_employee.display_employee_details(index);
+                display_employee_details(index);
                 cout << "press enter to return to the menu." << el;
                 string status;
                 getline(cin, status);
@@ -377,6 +365,7 @@ public:
                     }
                     else if (validate_state == -1) {
                         display_menu();
+                        select_option();
                     }
                     else if (validate_state == 1) {
                         cout << "Invalid input, please enter a valid Name or type \"exit\" to return to the main menu!" << el;
@@ -387,7 +376,7 @@ public:
                     }
                 }
                 int index = employee_database.find_employee_by_name(input);
-                display_employee.display_employee_details(index);
+                display_employee_details(index);
                 cout << "press enter to return to the menu." << el;
                 string status;
                 getline(cin, status);
@@ -427,6 +416,7 @@ public:
                     }
                     else if (validate_state == -1) {
                         display_menu();
+                        select_option();
                     }
                     else if (validate_state == 1) {
                         cout << "Invalid input, please enter a valid executive role or type \"exit\" to return to the main menu!" << el;
@@ -439,7 +429,7 @@ public:
                 cout << validate_state << el;
                 cout << input << el;
                 int index = employee_database.find_employee_by_role(input);
-                display_employee.display_employee_details(index);
+                display_employee_details(index);
                 cout << "Press enter to return to the menu." << el;
                 string status;
                 getline(cin, status);
@@ -449,6 +439,7 @@ public:
                   //return to main menu
             case 4: {
                 display_menu();
+                select_option();
                 break;
             }
             }
@@ -463,7 +454,7 @@ public:
             vector<Employee> high_wage_employees = employee_database.find_employees_with_high_wage();
             validate_state = validate_input.highwage_stat(high_wage_employees);
             if (validate_state == 1) {
-                display_employee.display_employee_details(high_wage_employees);
+                display_employee_details(high_wage_employees);
             }
             else if (validate_state == 0) {
                 cout << "No employee with high wage found!" << el;
@@ -492,6 +483,7 @@ public:
                 }
                 else if (validate_state == -1) {
                     display_menu();
+                    select_option();
                 }
                 else if (validate_state == 1) {
                     cout << RED << "Invalid input, please enter a valid ID or exit to return to the main menu!" << RESET << el;
@@ -504,7 +496,7 @@ public:
             //get index of employee to be deleted
             int index = employee_database.find_employee_by_id(stoll(input));
             //print employee data to be deleted
-            display_employee.display_employee_details(index);
+            display_employee_details(index);
 
             //confimation to delete employee data
             cout << "Are you sure you want to delete employee with id: " << input << "?" << el;
@@ -526,6 +518,7 @@ public:
             }
             case 2: {
                 display_menu();
+                select_option();
                 break;
             }
             }
@@ -537,11 +530,13 @@ public:
         case 6: {
             exit_system();
             display_menu();
+            select_option();
         }
         }
 
         //return to the main menu after option have been executed
         display_menu();
+        select_option();
     }
     void exit_system() {
         // Clear the console and display the exit message
@@ -603,6 +598,7 @@ public:
             }
             else if (validate_state == -1) {
                 display_menu();
+                select_option();
             }
             else if (validate_state == 1) {
                 cout << RED << "Invalid input, please enter a valid ID or exit to return to the main menu!" << RESET << el;
@@ -626,6 +622,7 @@ public:
             }
             else if (validate_state == -1) {
                 display_menu();
+                select_option();
             }
             else if (validate_state == 2) {
                 cout << RED << "Name already exist, please enter a new Name!" << RESET << el;
@@ -646,6 +643,7 @@ public:
             }
             else if (validate_state == -1) {
                 display_menu();
+                select_option();
             }
             else if (validate_state == 1) {
                 cout << RED << "Invalid input, please enter a valid Age or type exit to return to the main menu!" << RESET << el;
@@ -668,6 +666,7 @@ public:
             input = user_input.get_input();
             if (validate_input.check_exit(input) == true) {
                 display_menu();
+                select_option();
             }
             temp_street_name = input;
 
@@ -675,6 +674,7 @@ public:
             input = user_input.get_input();
             if (validate_input.check_exit(input) == true) {
                 display_menu();
+                select_option();
             }
             temp_near_by_landmarks = input;
 
@@ -683,6 +683,7 @@ public:
                 input = user_input.get_input();
                 if (validate_input.check_exit(input) == true) {
                     display_menu();
+                    select_option();
                 }
                 else if (validate_input.validate_int(input) == 1) {
                     cout << RED << "invalid input, please enter a valid number!" << RESET << el;
@@ -698,6 +699,7 @@ public:
                 input = user_input.get_input();
                 if (validate_input.check_exit(input) == true) {
                     display_menu();
+                    select_option();
                 }
                 else if (validate_input.validate_int(input) == 1) {
                     cout << RED << "invalid input, please enter a valid number!" << RESET << el;;
@@ -713,6 +715,7 @@ public:
                 input = user_input.get_input();
                 if (validate_input.check_exit(input) == true) {
                     display_menu();
+                    select_option();
                 }
                 else if (validate_input.validate_int(input) == 1) {
                     cout << RED << "invalid input, please enter a valid number!" << RESET << el;
@@ -728,6 +731,7 @@ public:
             }
             else if (validate_state == -1) {
                 display_menu();
+                select_option();
             }
             else if (validate_state == 1) {
                 cout << RED << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << RESET << el;
@@ -772,6 +776,7 @@ public:
             }
             else if (validate_state == -1) {
                 display_menu();
+                select_option();
             }
             else if (validate_state == 1) {
                 cout << RED << "Invalid input, please enter a valid Role or type \"exit\" to return to the main menu!" << RESET << el;
@@ -796,6 +801,7 @@ public:
             }
             else if (validate_state == -1) {
                 display_menu();
+                select_option();
             }
             else if (validate_state == 1) {
                 cout << RED << "Invalid input, please enter a valid salary or type \"exit\" to return to the main menu!" << RESET << el;

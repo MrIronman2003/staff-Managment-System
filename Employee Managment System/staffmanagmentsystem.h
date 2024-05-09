@@ -21,6 +21,7 @@ public:
 		initialize.restore_data_from_file();
 		while (1) {
 			display_menu();
+			select_option();
 		}
 	}
 

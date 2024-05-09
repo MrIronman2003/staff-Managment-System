@@ -4,12 +4,20 @@
 #include <iostream>
 #include <string>
 #include <limits>
-#include "menu.h"
 #include "database.h"
 #include "employee.h"
 #include "validator.h"
 #include "SalaryCalculator.h"
 #include "inputhandler.h"
+
+// ANSI escape codes for color
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+#define RESET "\033[0m"
 
 using namespace std;
 #define el '\n'
@@ -21,8 +29,20 @@ class Out_Put_Handler {
     SalaryCalculator salary_calculator;
 public:
     void display_menu() {
+        system("cls");
+        cout << "Staff Management System" << el << el;
+        cout << "====================================================" << el;
+        cout << YELLOW << setw(27) << "Main Menu" << RESET << el;
+        cout << "====================================================" << el;
+        cout << GREEN << "1. Add New Employee." << RESET << el;
+        cout << BLUE << "2. Edit Employee data." << RESET << el;
+        cout << CYAN << "3. Search Employee. " << RESET << el;
+        cout << MAGENTA << "4. Search Employee with high wage. " << RESET << el;
+        cout << RED << "5. Delete Employee data." << el;
+        cout << "6. Exit Program." << RESET << el;
 
     }
+
     // Display employee(s) details
     void display_employee_details(int index) {
         system("cls");
