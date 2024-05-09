@@ -824,6 +824,7 @@ public:
         }
         //save validated role
         string role = input;
+        transform(role.begin(), role.end(), role.begin(), ::toupper);
         return role;
     }
     //collect and validate Salary
