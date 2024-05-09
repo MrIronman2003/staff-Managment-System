@@ -44,5 +44,8 @@
     <ClInclude Include="SalaryCalculator.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="filehandler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

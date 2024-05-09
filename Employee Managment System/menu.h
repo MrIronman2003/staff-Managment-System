@@ -12,10 +12,12 @@
 #include "employee.h"
 #include "validator.h"
 #include "inputhandler.h"
+#include "filehandler.h"
 
 //defines
 using namespace std;
 #define el "\n"
+
 // ANSI escape codes for color
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -28,7 +30,8 @@ using namespace std;
 
 vector<Employee> Database::Employees_data;
 
-class Menu : public Out_Put_Handler{
+class Menu : public Out_Put_Handler {
+    
     Input_Handler user_input;
     Employee_Validator validate_input;
     Database employee_database;
@@ -78,7 +81,7 @@ public:
         system("cls");
         cout << "Staff Management System" << el << el;
         cout << "====================================================" << el;
-        cout << YELLOW << setw(27) <<"Main Menu" << RESET << el;
+        cout << YELLOW << setw(27) << "Main Menu" << RESET << el;
         cout << "====================================================" << el;
         cout << GREEN << "1. Add New Employee." << RESET << el;
         cout << BLUE << "2. Edit Employee data." << RESET << el;
@@ -139,13 +142,13 @@ public:
             cout << "Adding new Employee Data" << el;
             New_employee = collect_data();
 
-			cout << "Employee Data " << el;
-			display_employee.display_employee_for_save(New_employee);
-			cout << "Are you sure you want to save this data?" << el;
-			cout << GREEN << "1. YES" << el;
-			cout << RED << "2. NO" << RESET << el;
+            cout << "Employee Data " << el;
+            display_employee.display_employee_for_save(New_employee);
+            cout << "Are you sure you want to save this data?" << el;
+            cout << GREEN << "1. YES" << el;
+            cout << RED << "2. NO" << RESET << el;
 
-			int option;
+            int option;
 
             while (!(cin >> option) || option < 1 || option > 6) {
                 cout << "Invalid choice. Please enter a valid input.\n";
@@ -250,7 +253,7 @@ public:
                 system("cls");
                 cin.ignore();
                 cout << "Editing Employee Age" << el;
-				int age = collect_age();
+                int age = collect_age();
                 employee_database.set_new_age(age, index);
                 break;
             }
@@ -260,8 +263,8 @@ public:
                 system("cls");
                 cin.ignore();
                 cout << "Editing Employee Address" << el;
-				address new_employee_addresss = collect_address();
-				employee_database.set_new_address(new_employee_addresss, index);
+                address new_employee_addresss = collect_address();
+                employee_database.set_new_address(new_employee_addresss, index);
                 break;
             }
 
@@ -270,7 +273,7 @@ public:
                 system("cls");
                 cin.ignore();
                 cout << "Editing Employee Role" << el;
-				string role = collect_role();
+                string role = collect_role();
                 employee_database.set_new_role(role, index);
                 break;
             }
@@ -498,10 +501,10 @@ public:
                 }
             }
             system("cls");
-			//get index of employee to be deleted
-			int index = employee_database.find_employee_by_id(stoll(input));
-			//print employee data to be deleted
-			display_employee.display_employee_details(index);
+            //get index of employee to be deleted
+            int index = employee_database.find_employee_by_id(stoll(input));
+            //print employee data to be deleted
+            display_employee.display_employee_details(index);
 
             //confimation to delete employee data
             cout << "Are you sure you want to delete employee with id: " << input << "?" << el;
@@ -562,7 +565,9 @@ public:
             break;
         }
         case 2: {
+
             // If the user chooses to exit, display the credits and exit the program
+            employee_database.save_data_to_file();
             system("cls");
             cout << "Program made by:" << el << "Mahmoud Ahmed\tID: 234051" << el << "Ahmed Hussein\tID: 225381" << el << el << "press enter to exit the program" << el;
             string status;
@@ -574,20 +579,20 @@ public:
         }
     }
 
-	//collect employee data
+    //collect employee data
     Employee collect_data() {
-		Employee collected_data;
-		collected_data.set_id(collect_ID());
-		collected_data.set_name(collect_name());
-		collected_data.set_age(collect_age());
-		collected_data.set_home_address(collect_address());
-		collected_data.set_role(collect_role());
-		collected_data.set_salary(collect_salary());
-		return collected_data;
+        Employee collected_data;
+        collected_data.set_id(collect_ID());
+        collected_data.set_name(collect_name());
+        collected_data.set_age(collect_age());
+        collected_data.set_home_address(collect_address());
+        collected_data.set_role(collect_role());
+        collected_data.set_salary(collect_salary());
+        return collected_data;
     }
 
-	//collect and validate ID
-	long long collect_ID() {
+    //collect and validate ID
+    long long collect_ID() {
         cout << "Enter ID or type \"exit\" to return to the main menu!" << el;
         while (1) {
             validate_state = 0; //reset validate_state
@@ -603,14 +608,14 @@ public:
                 cout << RED << "Invalid input, please enter a valid ID or exit to return to the main menu!" << RESET << el;
             }
             else if (validate_state == 2) {
-                cout << RED << "ID is already taken, please enter a new ID!" << RESET<< el;
+                cout << RED << "ID is already taken, please enter a new ID!" << RESET << el;
             }
         }
         long long ID = stoll(input);
         return ID;
-	}
-	//collect and validate Name
-	string collect_name() {
+    }
+    //collect and validate Name
+    string collect_name() {
         cout << "Enter Employee Name or type \"exit\" to return to the main menu!" << el;
         while (1) {
             validate_state = 0; //reset validate_state
@@ -628,9 +633,9 @@ public:
         }
         string name = input;
         return name;
-	}
-	//collect and validate Age
-	int collect_age() {
+    }
+    //collect and validate Age
+    int collect_age() {
         cout << "Enter Employee Age or type \"exit\" to return to the main menu!" << el;
         while (1) {
             validate_state = 0; //reset validate_state
@@ -650,11 +655,11 @@ public:
             }
         }
         int age = stoi(input);
-		return age;
-	}
-	//collect and validate Address
-	address collect_address() {
-		address collected_data_address;
+        return age;
+    }
+    //collect and validate Address
+    address collect_address() {
+        address collected_data_address;
         cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
         while (1) {
             validate_state = 0; //reset validate_state
@@ -731,15 +736,15 @@ public:
                 break;
             }
         }
-		collected_data_address.street_name = temp_street_name;
-		collected_data_address.near_by_landmarks = temp_near_by_landmarks;
-		collected_data_address.building_number = stoi(temp_building_num);
-		collected_data_address.floor_number = stoi(temp_floor_num);
-		collected_data_address.apartment_number = stoi(temp_apart_num);
-		return collected_data_address;
-	}
-	//collect and validate Role
-	string collect_role() {
+        collected_data_address.street_name = temp_street_name;
+        collected_data_address.near_by_landmarks = temp_near_by_landmarks;
+        collected_data_address.building_number = stoi(temp_building_num);
+        collected_data_address.floor_number = stoi(temp_floor_num);
+        collected_data_address.apartment_number = stoi(temp_apart_num);
+        return collected_data_address;
+    }
+    //collect and validate Role
+    string collect_role() {
         //display the positions in a table
         cout << "---------------------------------------------------" << el;
         cout << "| Title                            | Abbreviation |" << el;
@@ -777,10 +782,10 @@ public:
         }
         //save validated role
         string role = input;
-		return role;
-	}
-	//collect and validate Salary
-	float collect_salary() {
+        return role;
+    }
+    //collect and validate Salary
+    float collect_salary() {
         cout << "Enter Employee Salary or type \"exit\" to return to the main menu!" << el;
         while (1) {
             validate_state = 0; //reset validate_state
@@ -800,7 +805,7 @@ public:
             }
         }
         float salary = stof(input);
-		return salary;
-	}
+        return salary;
+    }
 };
 #endif

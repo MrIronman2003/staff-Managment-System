@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="database.h" />
     <ClInclude Include="employee.h" />
+    <ClInclude Include="filehandler.h" />
     <ClInclude Include="inputhandler.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="outputhandler.h" />

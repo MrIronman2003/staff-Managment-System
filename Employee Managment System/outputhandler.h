@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include "menu.h"
 #include "database.h"
 #include "employee.h"
 #include "validator.h"
@@ -14,15 +15,15 @@ using namespace std;
 #define el '\n'
 
 class Out_Put_Handler {
-	Database data;
-	Employee display_employee_data;
-	address display_address_data;
-	SalaryCalculator salary_calculator;
+    Database data;
+    Employee display_employee_data;
+    address display_address_data;
+    SalaryCalculator salary_calculator;
 public:
-	void display_menu() {
+    void display_menu() {
 
-	}
-	// Display employee(s) details
+    }
+    // Display employee(s) details
     void display_employee_details(int index) {
         system("cls");
 
@@ -44,7 +45,7 @@ public:
         cout << left << setw(20) << "Apartment Number:" << display_address_data.apartment_number << el << "----------------------------------------" << el;
         cout << left << setw(20) << "Role:" << display_employee_data.get_role() << el << "----------------------------------------" << el;
         cout << left << setw(20) << "Salary:" << fixed << setprecision(2) << display_employee_data.get_salary() << el << "----------------------------------------" << el;
-		salary_calculator.set_salary(display_employee_data.get_salary());
+        salary_calculator.set_salary(display_employee_data.get_salary());
         cout << left << setw(20) << "Yearly Salary:" << fixed << setprecision(2) << salary_calculator.calculate_salary() << el << "----------------------------------------" << el;
     }
     void display_employee_details(vector<Employee> employees) {
@@ -90,21 +91,18 @@ public:
         }
     }
     void display_employee_for_save(Employee display_data) {
-		system("cls");
-		cout << "----------------------------------------" << el;
-		cout << left << setw(20) << "ID:" << display_data.get_id() << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Name:" << display_data.get_name() << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Age:" << display_data.get_age() << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Street:" << display_data.get_home_address().street_name << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Nearby landmarks:" << display_data.get_home_address().near_by_landmarks << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Building Number:" << display_data.get_home_address().building_number << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Floor Number:" << display_data.get_home_address().floor_number << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Apartment Number:" << display_data.get_home_address().apartment_number << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Role:" << display_data.get_role() << el << "----------------------------------------" << el;
-		cout << left << setw(20) << "Salary:" << fixed << setprecision(2) << display_data.get_salary() << el << "----------------------------------------" << el;
+        system("cls");
+        cout << "----------------------------------------" << el;
+        cout << left << setw(20) << "ID:" << display_data.get_id() << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Name:" << display_data.get_name() << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Age:" << display_data.get_age() << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Street:" << display_data.get_home_address().street_name << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Nearby landmarks:" << display_data.get_home_address().near_by_landmarks << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Building Number:" << display_data.get_home_address().building_number << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Floor Number:" << display_data.get_home_address().floor_number << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Apartment Number:" << display_data.get_home_address().apartment_number << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Role:" << display_data.get_role() << el << "----------------------------------------" << el;
+        cout << left << setw(20) << "Salary:" << fixed << setprecision(2) << display_data.get_salary() << el << "----------------------------------------" << el;
     }
-
-
-
 };
 #endif

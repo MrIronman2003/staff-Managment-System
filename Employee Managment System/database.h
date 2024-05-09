@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cctype>
 #include "employee.h"
+#include "filehandler.h"
 
 // Use the standard namespace
 using namespace std;
@@ -147,5 +148,15 @@ public:
 	void set_new_salary(float salary, int index) {
 		Employees_data[index].set_salary(salary);
 	}
+
+    void save_data_to_file() {
+        saveData(Employees_data, "employeeData");
+    }
+
+    void restore_data_from_file() {
+        restoreData(Employees_data, "employeeData");
+    }
+
+
 };
 #endif

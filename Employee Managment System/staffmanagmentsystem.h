@@ -13,9 +13,12 @@
 using namespace std;
 #define el "\n"
 
-class Staff_Managment_System : public Database, public Menu{
+class Staff_Managment_System : public Database, public Menu {
+	Database initialize;
+	Out_Put_Handler menu_call;
 public:
 	void run() {
+		initialize.restore_data_from_file();
 		while (1) {
 			display_menu();
 		}
