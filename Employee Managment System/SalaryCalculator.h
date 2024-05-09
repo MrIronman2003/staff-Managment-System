@@ -19,10 +19,6 @@ public:
 		salary = s;
 	}
 
-	void set_working_months(int m) {
-		working_months = m;
-	}
-
 	float calculate_salary() {
 		net_salary = salary * working_months;
 		return net_salary;

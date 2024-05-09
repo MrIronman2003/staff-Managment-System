@@ -38,8 +38,9 @@ public:
         cout << BLUE << "2. Edit Employee data." << RESET << el;
         cout << CYAN << "3. Search Employee. " << RESET << el;
         cout << MAGENTA << "4. Search Employee with high wage. " << RESET << el;
-        cout << RED << "5. Delete Employee data." << el;
-        cout << "6. Exit Program." << RESET << el;
+        cout << RED << "5. Delete Employee data." << RESET << el;
+		cout << GREEN << "6. Save Employee data to external files." << RESET << el;
+        cout << RED << "7. Exit Program." << RESET << el;
 
     }
 

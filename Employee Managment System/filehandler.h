@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <iomanip>
+#include "SalaryCalculator.h"
 #include "database.h"
 
 
@@ -28,6 +29,7 @@ void restoreData(vector<Employee>& employees, const string& filename) {
 }
 
 void saveExcel(const vector<Employee>& employees, const string& filename) {
+	SalaryCalculator salary_calculator;
     ofstream outFile(filename);
     outFile << "Employee Number,ID,Name,Age,Street Name,Nearby Landmark,Building Number,Floor Number,Apartment Number,Role,Salary,Yearly Salary\n";
     // Write the headers
@@ -44,7 +46,7 @@ void saveExcel(const vector<Employee>& employees, const string& filename) {
             << employee.get_home_address().apartment_number << ","
             << employee.get_role() << ","
             << fixed << setprecision(2) << employee.get_salary() << ","
-            << fixed << setprecision(2) << employee.get_salary() * 12 << "\n";
+            << fixed << setprecision(2) << salary_calculator.calculate_salary() << "\n";
     }
     outFile.close();
 }

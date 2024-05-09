@@ -79,7 +79,7 @@ public:
     void select_option() {
         int option;
         // Validate user input
-        while (!(cin >> option) || option < 1 || option > 6) {
+        while (!(cin >> option) || option < 1 || option > 7) {
             cout << "Invalid choice. Please enter a valid input.\n";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -116,6 +116,9 @@ public:
             execute_option(6);
             break;
         }
+        case 7: {
+            execute_option(7);
+            break; }
         }
     }
     void execute_option(int choice) {
@@ -526,8 +529,41 @@ public:
             break;
         }
 
+			  //save employee data to external files
+		case 6: {
+			system("cls");
+			cout << "Are you sure you want to save employee data to external files?" << el;
+			cout << GREEN << "1. YES." << el;
+			cout << RED << "2. NO." << RESET << el;
+			int option;
+			while (!(cin >> option) || option < 1 || option > 2) {
+				cout << "Invalid choice. Please enter a valid input.\n";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+            switch (option) {
+            case 1: {
+				employee_database.save_data_to_file();
+				employee_database.save_data_to_excel();
+				cout << "Employee data saved to external files successfully!" << el << "press enter to return to the menu." << el;
+				string status;
+				cin.ignore();
+				getline(cin, status);
+				break;
+            }
+            case 2: {
+				display_menu();
+				select_option();
+
+                break;
+            }
+            }
+            break;
+
+        }
+
               //exit program
-        case 6: {
+        case 7: {
             exit_system();
             display_menu();
             select_option();
