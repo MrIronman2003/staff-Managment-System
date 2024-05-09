@@ -563,6 +563,7 @@ public:
 
             // If the user chooses to exit, display the credits and exit the program
             employee_database.save_data_to_file();
+            employee_database.save_data_to_excel();
             system("cls");
             cout << "Program made by:" << el << "Mahmoud Ahmed\tID: 234051" << el << "Ahmed Hussein\tID: 225381" << el << el << "press enter to exit the program" << el;
             string status;

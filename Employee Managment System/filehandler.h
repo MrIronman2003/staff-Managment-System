@@ -2,6 +2,7 @@
 #define FILEHANDLER_H
 #include <fstream>
 #include <vector>
+#include <iomanip>
 #include "database.h"
 
 
@@ -24,5 +25,27 @@ void restoreData(vector<Employee>& employees, const string& filename) {
         employees.push_back(employee);
     }
     inFile.close();
+}
+
+void saveExcel(const vector<Employee>& employees, const string& filename) {
+    ofstream outFile(filename);
+    outFile << "Employee Number,ID,Name,Age,Street Name,Nearby Landmark,Building Number,Floor Number,Apartment Number,Role,Salary,Yearly Salary\n";
+    // Write the headers
+    for (size_t i = 0; i < employees.size(); ++i) {
+        const Employee& employee = employees[i];
+        outFile << i + 1 << ","
+            << employee.get_id() << ","
+            << employee.get_name() << ","
+            << employee.get_age() << ","
+            << employee.get_home_address().street_name << ","
+            << employee.get_home_address().near_by_landmarks << ","
+            << employee.get_home_address().building_number << ","
+            << employee.get_home_address().floor_number << ","
+            << employee.get_home_address().apartment_number << ","
+            << employee.get_role() << ","
+            << fixed << setprecision(2) << employee.get_salary() << ","
+            << fixed << setprecision(2) << employee.get_salary() * 12 << "\n";
+    }
+    outFile.close();
 }
 #endif

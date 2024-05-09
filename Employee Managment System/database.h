@@ -149,10 +149,15 @@ public:
 		Employees_data[index].set_salary(salary);
 	}
 
+    //save data to external files
     void save_data_to_file() {
         saveData(Employees_data, "employeeData");
     }
+    void save_data_to_excel(){
+        saveExcel(Employees_data, "Employees Data.csv");
+    }
 
+    //Retrive data from external files
     void restore_data_from_file() {
         restoreData(Employees_data, "employeeData");
     }

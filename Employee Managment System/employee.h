@@ -10,15 +10,12 @@
 
 using namespace std;
 
-// Define the Employee class
-
 struct address {
     string street_name, near_by_landmarks;
     int building_number = 0; // Initialize building_number
     int floor_number = 0; // Initialize floor_number
     int apartment_number = 0; // Initialize apartment_number
 
-    // Add the save and load functions here
     void save(ofstream& outFile) {
         outFile << street_name << "\n" << near_by_landmarks << "\n";
         outFile << building_number << "\n" << floor_number << "\n" << apartment_number << "\n";
@@ -46,7 +43,6 @@ private:
     address home_address;
 
 public:
-    // Add the save and load functions here
     void save(ofstream& outFile) {
         outFile << ID << "\n" << name << "\n" << age << "\n";
         home_address.save(outFile);
@@ -78,22 +74,22 @@ public:
 
 
     // Define public getter methods
-    long long get_id() {
+    long long get_id() const {
         return ID;
     }
-    string get_name() {
+    string get_name() const {
         return name;
     }
-    int get_age() {
+    int get_age() const {
         return age;
     }
-    address get_home_address() {
+    address get_home_address() const {
         return home_address;
     }
-    string get_role() {
+    string get_role() const {
         return role;
     }
-    float get_salary() {
+    float get_salary() const {
         return salary;
     }
 
@@ -115,10 +111,6 @@ public:
     }
     void set_salary(float s) {
         salary = s;
-    }
-
-    const address& get_home_address() const {
-        return home_address;
     }
 
 };
