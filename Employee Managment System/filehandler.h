@@ -35,6 +35,7 @@ void saveExcel(const vector<Employee>& employees, const string& filename) {
     // Write the headers
     for (size_t i = 0; i < employees.size(); ++i) {
         const Employee& employee = employees[i];
+        salary_calculator.set_salary(employee.get_salary());
         outFile << i + 1 << ","
             << employee.get_id() << ","
             << employee.get_name() << ","
