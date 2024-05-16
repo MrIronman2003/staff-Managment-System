@@ -8,7 +8,7 @@
 #include "inputhandler.h"
 #include "menu.h"
 
-class Staff_Managment_System : public Database, public Menu {
+class Staff_Management_System : public Database, public Menu {
 	Database initialize;
 	Out_Put_Handler menu_call;
 public:
