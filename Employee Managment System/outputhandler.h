@@ -1,26 +1,12 @@
 #ifndef OUTPUTHANDLER_H
 #define OUTPUTHANDLER_H
 
-#include <iostream>
-#include <string>
-#include <limits>
+#include "main.h"
 #include "database.h"
 #include "employee.h"
 #include "validator.h"
 #include "SalaryCalculator.h"
 #include "inputhandler.h"
-
-// ANSI escape codes for color
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define BLUE "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN "\033[36m"
-#define RESET "\033[0m"
-
-using namespace std;
-#define el '\n'
 
 class Out_Put_Handler {
     Database data;
@@ -29,24 +15,23 @@ class Out_Put_Handler {
     SalaryCalculator salary_calculator;
 public:
     void display_menu() {
-        system("cls");
+        system(CLEAR);
         cout << "Staff Management System" << el << el;
         cout << "====================================================" << el;
-        cout << YELLOW << setw(27) << "Main Menu" << RESET << el;
+        cout << YELLOW << "\t\t   Main Menu" << RESET << el;
         cout << "====================================================" << el;
         cout << GREEN << "1. Add New Employee." << RESET << el;
         cout << BLUE << "2. Edit Employee data." << RESET << el;
         cout << CYAN << "3. Search Employee. " << RESET << el;
-        cout << MAGENTA << "4. Search Employee with high wage. " << RESET << el;
+        cout << MAGENTA << "4. Search Employee with high wage. (20,000 per month or higher) " << RESET << el;
         cout << RED << "5. Delete Employee data." << RESET << el;
 		cout << GREEN << "6. Save Employee data to external files." << RESET << el;
         cout << RED << "7. Exit Program." << RESET << el;
-
     }
 
     // Display employee(s) details
     void display_employee_details(int index) {
-        system("cls");
+        system(CLEAR);
 
         // Retrieve the employee data using the provided index
         display_employee_data = data.retrive_data(index);
@@ -70,7 +55,7 @@ public:
         cout << left << setw(20) << "Yearly Salary:" << fixed << setprecision(2) << salary_calculator.calculate_salary() << el << "----------------------------------------" << el;
     }
     void display_employee_details(vector<Employee> employees) {
-        system("cls");
+        system(CLEAR);
         cout << "----------------------------------------" << el;
         // Loop through the employees vector and print the details of each employee
         for (int i = 0; i < employees.size(); i++) {
@@ -112,7 +97,7 @@ public:
         }
     }
     void display_employee_for_save(Employee display_data) {
-        system("cls");
+        system(CLEAR);
         cout << "----------------------------------------" << el;
         cout << left << setw(20) << "ID:" << display_data.get_id() << el << "----------------------------------------" << el;
         cout << left << setw(20) << "Name:" << display_data.get_name() << el << "----------------------------------------" << el;

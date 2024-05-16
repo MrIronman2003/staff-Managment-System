@@ -1,7 +1,7 @@
 #ifndef SALARYCALCULATOR_H
 #define SALARYCALCULATOR_H
-#include <iostream>
-#include <string>
+
+#include "main.h"
 
 class SalaryCalculator {
 private:

@@ -1,20 +1,10 @@
-#include <iostream>
-#include <string>
-#include <limits>
+#include "main.h"
 #include "staffmanagmentsystem.h"
-
-using namespace std;
-
-// ANSI escape codes for color
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define BLUE "\033[34m"
-#define RESET "\033[0m"
 
 int main() {
 
     // Clear the screen
-    system("cls");
+    system(CLEAR);
 
     // Use ASCII art for the title
     cout << RED << R"(
@@ -47,6 +37,22 @@ int main() {
           __/ |                      
          |___/                                                              
 )" << RESET << el;
+
+    cout << R"(
+The Staff Management Program is a program designed to streamline the process of managing staff data.
+This simple yet robust program allows users to input, edit, and delete employee information with ease.
+
+One of the key features of this program is its ability to save data in both .txt and .csv formats.
+This ensures that users can access and manipulate the data outside the program, providing an additional layer of convenience.
+
+Understanding that users may sometimes forget to save their latest data, the program includes an auto-save feature.
+When exiting the program via the main menu, the most recent data is automatically saved to the external files, ensuring no information is lost.
+
+Designed with user experience in mind, the program is capable of handling multiple errors without crashing, providing a smooth and uninterrupted experience.
+
+The program also includes a powerful search feature. This allows users to locate employees using their full name stored in the system.
+Additionally, users can utilize this feature to identify who currently holds a specific executive role.
+)" << el;
 
     cout << "Program made by: " << "\n";
     cout << BLUE << "Mahmoud Ahmed \t ID: 234051" << RESET << "\n";

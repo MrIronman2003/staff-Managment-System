@@ -134,6 +134,7 @@
     <ClInclude Include="employee.h" />
     <ClInclude Include="filehandler.h" />
     <ClInclude Include="inputhandler.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="outputhandler.h" />
     <ClInclude Include="SalaryCalculator.h" />

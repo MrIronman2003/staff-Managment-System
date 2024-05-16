@@ -10,14 +10,9 @@
 #ifndef VALIDATOR_H
 #define VALIDATOR_H
 
-#include <iostream>
-#include <string>
-#include <limits>
+#include "main.h"
 #include "database.h"
 #include "employee.h"
-
-using namespace std;
-#define el "\n"
 
 struct CompanyPosition {
     string name;
@@ -25,7 +20,7 @@ struct CompanyPosition {
 };
 
 class Employee_Validator {
-	int search_result;
+	int search_result = 0;
     Database search;
     vector<CompanyPosition> Executive_Positions = {
         //Executive positions
@@ -85,7 +80,7 @@ public:
     int validate_id(const string& ID_check) {
         try {
             long long ID = stoll(ID_check);  // Convert input to long long
-            if (ID > 10000000000) {
+            if (ID < 0 || ID > 10000000000) {
                 return 1;  // Invalid input (large number)
             }
             // Assuming `find_employee_by_id` exists in the `Database` class
@@ -148,16 +143,10 @@ public:
             // Convert apartment number to an integer
             int apartment_number = stoi(check_appart_num);
 
-            // Check if the conversion was successful
-            // (You can add additional validation logic here if needed)
-
-            // Assuming other address validation checks (e.g., street, landmark) are performed elsewhere
-
             return 0;  // No error
         }
         catch (const invalid_argument&) {
-            if (check_exit(check_street) == true || check_exit(check_nearby_landmark) == true ||
-                check_exit(check_building_number) == true || check_exit(check_floor_num) == true || check_exit(check_appart_num) == true == true) {
+            if (check_exit(check_building_number) == true || check_exit(check_floor_num) == true || check_exit(check_appart_num) == true == true) {
                 return -1;  // User entered "exit"
             }
             return 1;  // Invalid input
@@ -207,7 +196,7 @@ public:
     int validate_salary(string salary_check) {
         try {
             long long salary = stoll(salary_check);  // Convert input to long long
-            if (salary > 10000000000) {
+            if (salary < 0 || salary > 10000000) {
                 return 1;  // Invalid input (large number)
             }
             // Assuming `find_employee_by_id` exists in the `Database` class
@@ -284,7 +273,7 @@ public:
     int validate_int(string check_int) {
         try {
             long long input_to_int = stoll(check_int);  // Convert input to long long
-            if (input_to_int > 1000000) {
+            if (input_to_int < 0 || input_to_int > 1000000) {
                 return 1;  // Invalid input (large number)
             }
             return 0;  // No error

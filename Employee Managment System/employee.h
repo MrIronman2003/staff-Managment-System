@@ -1,14 +1,7 @@
 #ifndef EMPLOYEE_H
 #define EMPLOYEE_H
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <cctype>
-#include <fstream> 
-
-using namespace std;
+#include "main.h"
 
 struct address {
     string street_name, near_by_landmarks;
@@ -16,11 +9,11 @@ struct address {
     int floor_number = 0; // Initialize floor_number
     int apartment_number = 0; // Initialize apartment_number
 
+    //functions for saving and retreving data from the .txt file
     void save(ofstream& outFile) {
         outFile << street_name << "\n" << near_by_landmarks << "\n";
         outFile << building_number << "\n" << floor_number << "\n" << apartment_number << "\n";
     }
-
     void load(ifstream& inFile) {
         getline(inFile, street_name);
         getline(inFile, near_by_landmarks);
@@ -43,12 +36,13 @@ private:
     address home_address;
 
 public:
+
+
     void save(ofstream& outFile) {
         outFile << ID << "\n" << name << "\n" << age << "\n";
         home_address.save(outFile);
         outFile << role << "\n" << salary << "\n";
     }
-
     void load(ifstream& inFile) {
         inFile >> ID;
         inFile.ignore();  // Ignore newline character

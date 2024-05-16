@@ -1,11 +1,9 @@
 #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
-#include <fstream>
-#include <vector>
-#include <iomanip>
+
+#include "main.h"
 #include "SalaryCalculator.h"
 #include "database.h"
-
 
 // Function to save data in a vector into a file
 void saveData(vector<Employee>& employees, const string& filename) {
@@ -15,7 +13,6 @@ void saveData(vector<Employee>& employees, const string& filename) {
     }
     outFile.close();
 }
-
 
 // Function to restore data from a file and resave it in the vector
 void restoreData(vector<Employee>& employees, const string& filename) {
@@ -28,6 +25,7 @@ void restoreData(vector<Employee>& employees, const string& filename) {
     inFile.close();
 }
 
+// Function to save the data into an excel file for ease of use to the user
 void saveExcel(const vector<Employee>& employees, const string& filename) {
 	SalaryCalculator salary_calculator;
     ofstream outFile(filename);

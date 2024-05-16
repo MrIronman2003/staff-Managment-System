@@ -1,12 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <iostream>
-#include <string>
-#include <limits>
-#include <vector>
-#include <iomanip>
-#include <algorithm>
+#include "main.h"
 #include "outputhandler.h"
 #include "database.h"
 #include "employee.h"
@@ -14,24 +9,11 @@
 #include "inputhandler.h"
 #include "filehandler.h"
 
-//defines
-using namespace std;
-#define el "\n"
-
-// ANSI escape codes for color
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define BLUE "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN "\033[36m"
-#define RESET "\033[0m"
-
-
 vector<Employee> Database::Employees_data;
 
 class Menu : public Out_Put_Handler {
-    
+
+protected:    
     Input_Handler user_input;
     Employee_Validator validate_input;
     Database employee_database;
@@ -125,7 +107,7 @@ public:
         switch (choice) {
             //Add new employee
         case 1: {
-            system("cls");
+            system(CLEAR);
             cin.ignore();
             cout << "Adding new Employee Data" << el;
             New_employee = collect_data();
@@ -133,41 +115,37 @@ public:
             cout << "Employee Data " << el;
             display_employee_for_save(New_employee);
             cout << "Are you sure you want to save this data?" << el;
-            cout << GREEN << "1. YES" << el;
-            cout << RED << "2. NO" << RESET << el;
+            cout << GREEN << "Yes" << el;
+            cout << RED << "No" << RESET << el;
 
-            int option;
+            string option;
+            while (true) {
+                getline(cin, option);
+                transform(option.begin(), option.end(), option.begin(), ::tolower); // convert to lowercase
 
-            while (!(cin >> option) || option < 1 || option > 6) {
-                cout << "Invalid choice. Please enter a valid input.\n";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
+                if (option == "y" || option == "yes") {
+                    //saving new employee data in database
+                    employee_database.add_employee(New_employee);
 
-            // Switch case to handle different options
-            switch (option) {
-            case 1: {
-                //saving new employee data in database
-                employee_database.add_employee(New_employee);
-
-                //Confirmation to return to the main menu by pressing enter
-                cout << "Employee data saved successfully!" << el << "press enter to return to the menu." << el;
-                string status;
-                cin.ignore();
-                getline(cin, status);
-                break;
-            }
-            case 2: {
-
-                break;
-            }
+                    //Confirmation to return to the main menu by pressing enter
+                    cout << "Employee data saved successfully!" << el << "press enter to return to the menu." << el;
+                    string status;
+                    getline(cin, status);
+                    break;
+                }
+                else if (option == "n" || option == "no") {
+                    break;
+                }
+                else {
+                    cout << "Invalid choice. Please enter Y/N or Yes/No.\n";
+                }
             }
             break;
         }
 
               //Edit Employee Data 
         case 2: {
-            system("cls");
+            system(CLEAR);
             cout << "Editing Employee Data: " << el;
 
             //look for the ID to edit
@@ -197,7 +175,7 @@ public:
             int index = employee_database.find_employee_by_id(stoll(input));
 
             //display edit options
-            system("cls");
+            system(CLEAR);
             cout << "what do you want to edit?" << el;
             cout << "1. ID" << el;
             cout << "2. Name" << el;
@@ -219,7 +197,7 @@ public:
 
                 //Edit Employee ID
             case 1: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Editing Employee ID" << el;
                 long long ID = collect_ID();
@@ -229,7 +207,7 @@ public:
 
                   //Edit Employee Name
             case 2: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Editing Employee Name" << el;
                 string name = collect_name();
@@ -239,7 +217,7 @@ public:
 
                   //Edit Employee Age
             case 3: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Editing Employee Age" << el;
                 int age = collect_age();
@@ -249,7 +227,7 @@ public:
 
                   //Edit Employee Address
             case 4: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Editing Employee Address" << el;
                 address new_employee_addresss = collect_address();
@@ -259,7 +237,7 @@ public:
 
                   //Edit Employee Role
             case 5: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Editing Employee Role" << el;
                 string role = collect_role();
@@ -269,7 +247,7 @@ public:
 
                   //Edit Employee Salary
             case 6: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Editing Employee Salary" << el;
                 float salary = collect_salary();
@@ -279,7 +257,7 @@ public:
 
                   //Edit All Employee Info
             case 7: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Editing All Employee Info" << el;
                 //getting edited employee data
@@ -306,7 +284,7 @@ public:
 
               //search employee
         case 3: {
-            system("cls");
+            system(CLEAR);
             cout << "Searching Employee data" << el;
             cout << "Search Employee by: " << el;
             cout << "1. ID" << el;
@@ -324,7 +302,7 @@ public:
 
                 //search employee by ID
             case 1: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Enter employee ID you want to search or tpye \"exit\" to return to the main menu" << el;
                 while (true) {
@@ -356,7 +334,7 @@ public:
 
                   //search employee by Name
             case 2: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "Enter employee Name you want to search or tpye \"exit\" to return to the main menu" << el;
                 while (true) {
@@ -388,7 +366,7 @@ public:
 
                   //search employee by Role
             case 3: {
-                system("cls");
+                system(CLEAR);
                 cin.ignore();
                 cout << "---------------------------------------------------" << el;
                 cout << "| Title                            | Abbreviation |" << el;
@@ -473,10 +451,10 @@ public:
 
               //delete employee data
         case 5: {
-            system("cls");
+            system(CLEAR);
             cin.ignore();
             cout << "Deleting Employee data" << el;
-            cout << "Enter employee ID you want to delete or tpye \"exit\" to return to the main menu" << el;
+            cout << "Enter employee ID you want to delete or type \"exit\" to return to the main menu" << el;
             while (1) {
                 validate_state = 0; //reset validate_state
                 input = user_input.get_input();
@@ -495,71 +473,70 @@ public:
                     break;
                 }
             }
-            system("cls");
+            system(CLEAR);
             //get index of employee to be deleted
             int index = employee_database.find_employee_by_id(stoll(input));
             //print employee data to be deleted
             display_employee_details(index);
 
-            //confimation to delete employee data
+            //confirmation to delete employee data
             cout << "Are you sure you want to delete employee with id: " << input << "?" << el;
-            cout << RED << "Warning: This action CANNOT reverted!" << el << "1. YES." << el << GREEN << "2. NO." << RESET << el;
-            int option;
-            while (!(cin >> option) || option < 1 || option > 2) {
-                cout << "Invalid choice. Please enter a valid input.\n";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
-            switch (option) {
-            case 1: {
-                employee_database.delete_employee(employee_database.find_employee_by_id(stoll(input)));
-                cout << "Employee data deleted successfully!" << el << "press enter to return to the menu." << el;
-                string status;
-                cin.ignore();
-                getline(cin, status);
-                break;
-            }
-            case 2: {
-                display_menu();
-                select_option();
-                break;
-            }
-            }
+            cout << RED << "Warning: This action CANNOT be reverted!" << RESET << el;
+            string option;
+            cout << "Yes" << el << "No" << el;
+            while (true) {
+                getline(cin, option);
+                transform(option.begin(), option.end(), option.begin(), ::tolower); // convert to lowercase
 
+                if (option == "y" || option == "yes") {
+                    employee_database.delete_employee(employee_database.find_employee_by_id(stoll(input)));
+                    cout << "Employee data deleted successfully!" << el << "press enter to return to the menu." << el;
+                    string status;
+                    getline(cin, status);
+                    break;
+                }
+                else if (option == "n" || option == "no") {
+                    display_menu();
+                    select_option();
+                    break;
+                }
+                else {
+                    cout << "Invalid choice. Please enter Y/N or Yes/No.\n";
+                }
+            }
             break;
         }
 
 			  //save employee data to external files
 		case 6: {
-			system("cls");
-			cout << "Are you sure you want to save employee data to external files?" << el;
-			cout << GREEN << "1. YES." << el;
-			cout << RED << "2. NO." << RESET << el;
-			int option;
-			while (!(cin >> option) || option < 1 || option > 2) {
-				cout << "Invalid choice. Please enter a valid input.\n";
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			}
-            switch (option) {
-            case 1: {
-				employee_database.save_data_to_file();
-				employee_database.save_data_to_excel();
-				cout << "Employee data saved to external files successfully!" << el << "press enter to return to the menu." << el;
-				string status;
-				cin.ignore();
-				getline(cin, status);
-				break;
-            }
-            case 2: {
-				display_menu();
-				select_option();
+            system(CLEAR);
+            cout << "Are you sure you want to save employee data to external files?" << el;
+            cout << GREEN << "Yes" << el;
+            cout << RED << "No" << RESET << el;
+            string option;
+			cin.ignore();
+            while (true) {
+                getline(cin, option);
+                transform(option.begin(), option.end(), option.begin(), ::tolower);
 
-                break;
-            }
+                if (option == "y" || option == "yes") {
+                    employee_database.save_data_to_file();
+                    employee_database.save_data_to_excel();
+                    cout << "Employee data saved to external files successfully!" << el << "press enter to return to the menu." << el;
+                    string status;
+                    getline(cin, status);
+                    break;
+                }
+                else if (option == "n" || option == "no") {
+                    display_menu();
+                    select_option();
+                    break;
+                }
+                else {
+                    cout << "Invalid choice. Please enter Y/N or Yes/No.\n";
+                }
             }
             break;
-
         }
 
               //exit program
@@ -576,38 +553,42 @@ public:
     }
     void exit_system() {
         // Clear the console and display the exit message
-        system("cls");
+        system(CLEAR);
         cout << "Staff Management Program" << el << el;
-        cout << "Are you sure you want to exit the program?" << el << GREEN << "1. No." << el << RED << "2. Yes." << RESET << el;
+        cout << "Are you sure you want to exit the program?" << el << RED << "Yes" << el << GREEN << "No" << RESET << el;
 
-        int option;
+        string option;
 
         // Validate the user's choice
-        while (!(cin >> option) || option < 1 || option > 2) {
-            cout << "Invalid choice. Please enter a valid input." << el;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        while (true) {
+            cin >> option;
+            transform(option.begin(), option.end(), option.begin(), ::tolower); // Convert to lowercase
+
+            if (option == "y" || option == "yes" || option == "n" || option == "no") {
+                break;
+            }
+            else {
+                cout << "Invalid choice. Please enter a valid input." << el;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
         }
 
         // Switch case to handle the user's choice
-        switch (option) {
-        case 1: {
+        if (option == "n" || option == "no") {
             // If the user chooses not to exit, return to the main menu
-            break;
+            return;
         }
-        case 2: {
-
+        else if (option == "y" || option == "yes") {
             // If the user chooses to exit, display the credits and exit the program
             employee_database.save_data_to_file();
             employee_database.save_data_to_excel();
-            system("cls");
+            system(CLEAR);
             cout << "Program made by:" << el << "Mahmoud Ahmed\tID: 234051" << el << "Ahmed Hussein\tID: 225381" << el << el << "press enter to exit the program" << el;
             string status;
             cin.ignore();
             getline(cin, status);
             exit(1);
-            break;
-        }
         }
     }
 
@@ -622,7 +603,6 @@ public:
         collected_data.set_salary(collect_salary());
         return collected_data;
     }
-
     //collect and validate ID
     long long collect_ID() {
         cout << "Enter ID or type \"exit\" to return to the main menu!" << el;
@@ -653,6 +633,13 @@ public:
         while (1) {
             validate_state = 0; //reset validate_state
             input = user_input.get_input();
+
+            // Check if the input is empty
+            if (input.empty()) {
+                cout << RED << "Input cannot be empty, please enter a Name!" << RESET << el;
+                continue;
+            }
+
             validate_state = validate_input.validate_name(input);
             if (validate_state == 0) {
                 break;
@@ -695,94 +682,56 @@ public:
     //collect and validate Address
     address collect_address() {
         address collected_data_address;
+        string temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num;
+        int validate_state = 0;
+        string input;
+
         cout << "Enter Employee Home Address or type \"exit\" to return to the main menu!" << el;
-        while (1) {
-            validate_state = 0; //reset validate_state
 
-            cout << "Enter street name: " << el;
-            input = user_input.get_input();
-            if (validate_input.check_exit(input) == true) {
-                display_menu();
-                select_option();
-            }
-            temp_street_name = input;
+        temp_street_name = get_input("Enter street name: ");
+        temp_near_by_landmarks = get_input("Enter near by land mark: ");
+        temp_building_num = get_input("Enter Building Number: ", true);
+        temp_floor_num = get_input("Enter Floor Number: ", true);
+        temp_apart_num = get_input("Enter Apartment Number: ", true);
 
-            cout << "Enter near by land mark: " << el;
-            input = user_input.get_input();
-            if (validate_input.check_exit(input) == true) {
-                display_menu();
-                select_option();
-            }
-            temp_near_by_landmarks = input;
-
-            cout << "Enter Building Number: " << el;
-            while (true) {
-                input = user_input.get_input();
-                if (validate_input.check_exit(input) == true) {
-                    display_menu();
-                    select_option();
-                }
-                else if (validate_input.validate_int(input) == 1) {
-                    cout << RED << "invalid input, please enter a valid number!" << RESET << el;
-                }
-                else {
-                    break;
-                }
-            }
-            temp_building_num = input;
-
-            cout << "Enter Floor Number: " << el;
-            while (true) {
-                input = user_input.get_input();
-                if (validate_input.check_exit(input) == true) {
-                    display_menu();
-                    select_option();
-                }
-                else if (validate_input.validate_int(input) == 1) {
-                    cout << RED << "invalid input, please enter a valid number!" << RESET << el;;
-                }
-                else {
-                    break;
-                }
-            }
-            temp_floor_num = input;
-
-            cout << "Enter Apartment Number: " << el;
-            while (true) {
-                input = user_input.get_input();
-                if (validate_input.check_exit(input) == true) {
-                    display_menu();
-                    select_option();
-                }
-                else if (validate_input.validate_int(input) == 1) {
-                    cout << RED << "invalid input, please enter a valid number!" << RESET << el;
-                }
-                else {
-                    break;
-                }
-            }
-            temp_apart_num = input;
-            validate_state = validate_input.validate_home_address(temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num);
-            if (validate_state == 0) {
-                break;
-            }
-            else if (validate_state == -1) {
-                display_menu();
-                select_option();
-            }
-            else if (validate_state == 1) {
-                cout << RED << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << RESET << el;
-            }
-            else if (validate_state == 0) {
-                break;
-            }
+        validate_state = validate_input.validate_home_address(temp_street_name, temp_near_by_landmarks, temp_building_num, temp_floor_num, temp_apart_num);
+        if (validate_state == 1) {
+            cout << RED << "Invalid input, please enter a valid address data or type exit to return to the main menu!" << RESET << el;
         }
+
         collected_data_address.street_name = temp_street_name;
         collected_data_address.near_by_landmarks = temp_near_by_landmarks;
         collected_data_address.building_number = stoi(temp_building_num);
         collected_data_address.floor_number = stoi(temp_floor_num);
         collected_data_address.apartment_number = stoi(temp_apart_num);
+
         return collected_data_address;
+    }
+    //gets inputs for address
+    string get_input(string prompt, bool isNumber = false) {
+        string input;
+        cout << prompt << el;
+        while (true) {
+            input = user_input.get_input();
+
+            if (input.empty()) {
+                cout << RED << "Input cannot be empty, please enter again!" << RESET << el;
+                continue;
+            }
+
+            if (validate_input.check_exit(input)) {
+                display_menu();
+                select_option();
+            }
+
+            if (isNumber && validate_input.validate_int(input) == 1) {
+                cout << RED << "Invalid input, please enter a valid number!" << RESET << el;
+                continue;
+            }
+
+            break;
+        }
+        return input;
     }
     //collect and validate Role
     string collect_role() {
@@ -808,6 +757,13 @@ public:
             validate_state = 0; //reset validate_state
             input = user_input.get_input();
             validate_state = validate_input.validate_role(input);
+
+            // Check if the input is empty
+            if (input.empty()) {
+                cout << RED << "Input cannot be empty, please enter a valid role!" << RESET << el;
+                continue;
+            }
+
             if (validate_state == 0) {
                 break;
             }

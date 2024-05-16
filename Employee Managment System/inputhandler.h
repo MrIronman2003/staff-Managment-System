@@ -1,14 +1,10 @@
 #ifndef INPUTHANDLER_H
 #define INPUTHANDLER_H
 
-#include <iostream>
-#include <string>
-#include <limits>
+#include "main.h"
 #include "database.h"
 #include "employee.h"
 #include "validator.h"
-
-using namespace std;
 
 //Define the input handler class
 class Input_Handler {

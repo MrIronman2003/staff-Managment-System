@@ -2,16 +2,10 @@
 #define DATABASE_H
 
 // Include necessary libraries
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <cctype>
+#include "main.h"
 #include "employee.h"
 #include "filehandler.h"
 
-// Use the standard namespace
-using namespace std;
 
 // Define the Database class
 class Database
